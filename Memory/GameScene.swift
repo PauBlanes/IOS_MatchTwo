@@ -9,6 +9,13 @@
 import SpriteKit
 import GameplayKit
 
+struct Directions {
+    var top:CGFloat
+    let bottom:CGFloat
+    let left:CGFloat
+    let right:CGFloat
+}
+
 class GameScene: SKScene, CardSpriteDelegate {
     
     private var label : SKLabelNode?
@@ -18,16 +25,15 @@ class GameScene: SKScene, CardSpriteDelegate {
     
     private var gameLogic = GameLogic()
     
-    var measures = (rows:4, columns:3)
+    var grid = (rows:4, columns:4)
     
     //var swipeRightGesture = UISwipeGestureRecognizer()
     
     override func didMove(to view: SKView) {
         
-        gameLogic.Start(numPairs: 6, startingPoints: 0, pointsPerMatch: 10, pointsToWin: 60)
+        gameLogic.Start(numPairs: (grid.rows*grid.columns)/2, startingPoints: 0, pointsPerMatch: 10, pointsToWin: 60)
         
         spawnCards(view: view, cards : gameLogic.cards)
-        
         
         //SWIPE
         /*swipeRightGesture =
@@ -48,34 +54,49 @@ class GameScene: SKScene, CardSpriteDelegate {
     
     func spawnCards (view: SKView, cards:[Card]) {
         
-        //Variables generales de tamaños
-        let backTextureSize = SKTexture(imageNamed: "back").size()
-        let backTextureAR = backTextureSize.height / backTextureSize.width
-
-        let padding = CGSize(width: view.frame.width*0.01, height: 10)
-        let safeArea = CGSize(width: view.frame.width - padding.width*2, height: view.frame.height - padding.height*2)
-        let cardWidth = safeArea.width/3 - (padding.width*2)
-        let cardHeight = cardWidth * backTextureAR
+        //Defino margenes
+        let gameFieldmargins = Directions(
+            top: 0, //en este caso soolo utilizo el bottom porque no quiero deformar las texturas
+            bottom: 100,
+            left: view.frame.width*0.02,
+            right: view.frame.width*0.02)
+        let cardMargins = Directions(
+            top: 0,
+            bottom: 10,
+            left: view.frame.width*0.02,
+            right: 0)
+        
+        //Calculo aspect ratio de la textura para no deformarla
+        let cardTextureSize = SKTexture(imageNamed: "back").size()
+        let cardTextureAspectRatio = cardTextureSize.height / cardTextureSize.width
+        
+        //Defino tamaño de cartas
+        let gameFieldWidth = view.frame.width - gameFieldmargins.left - gameFieldmargins.right
+        let cardWidth = (gameFieldWidth - (cardMargins.left*CGFloat(grid.columns-1)))/CGFloat(grid.columns)
+        let cardHeight = cardWidth * cardTextureAspectRatio
         let newSize = CGSize(width: cardWidth, height: cardHeight)
         
         //Create cards
-        var cardPosX : CGFloat = 0
-        var cardPosY : CGFloat = 0
-        for i in 0..<cards.count {
+        for i in 0..<grid.rows {
             
-            cardSprites.insert(CardSprite(), at: i)
-            cardSprites[i].card = cards[i]
-            cardSprites[i].delegate = self
-            //el back texture ya lo tienen todos igual pero si hay temas se pondria aqui
-            cardSprites[i].frontTexture = SKTexture(imageNamed: "card\(cardSprites[i].card.pairId+1)")
-            
-            cardPosX = padding.width*2 + CGFloat(i%measures.columns) * (cardWidth + padding.width*2)
-            cardPosY = padding.height*2 + CGFloat(i%measures.rows) * (cardHeight + padding.height*2)
-            cardSprites[i].setCard(newSize: newSize, position : CGPoint(x: cardPosX, y:cardPosY))
-            
-            addChild(cardSprites[i])
+            for j in 0..<grid.columns{
+                let index = i*grid.columns + j
+                
+                cardSprites.insert(CardSprite(), at: index)
+                cardSprites[index].card = cards[i]
+                cardSprites[index].delegate = self
+                //el back texture ya lo tienen todos igual pero si hay temas se pondria aqui
+                cardSprites[index].frontTexture = SKTexture(imageNamed: "card\(cardSprites[index].card.pairId+1)")
+                
+                let cardPosX = gameFieldmargins.left + CGFloat(j) * (cardWidth + cardMargins.left)
+                let cardPosY = gameFieldmargins.bottom + CGFloat(i) * (cardHeight + cardMargins.bottom)
+                cardSprites[index].setCard(newSize: newSize, position : CGPoint(x: cardPosX, y:cardPosY))
+                
+                addChild(cardSprites[index])
+            }
             
         }
+        
     }
     
     override func update(_ currentTime: TimeInterval) {

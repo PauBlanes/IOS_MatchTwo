@@ -32,6 +32,7 @@ class GameLogic {
             
             let chosenPair = i //esto puede ser random de un banco de imágenes
             cards[i].pairId = chosenPair
+            print(chosenPair)
             cards[i+numPairs].pairId = chosenPair
             
             cards[i].id = i

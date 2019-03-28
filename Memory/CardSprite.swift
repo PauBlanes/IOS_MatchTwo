@@ -29,6 +29,13 @@ class CardSprite: SKSpriteNode {
         self.position = position
     }
     
+    func setMargin (margins:Directions){
+        position.x += margins.left
+        position.x -= margins.right
+        position.y += margins.bottom
+        position.y -= margins.top
+    }
+    
     func flip () {
         
         if card.state == CardState.covered {
