@@ -17,6 +17,8 @@ class GameLogic {
     var cards = [Card]()
     var selected:Card?
     
+    var consecutiveMatches = 0
+    
     func Start(numPairs:Int, startingPoints:Int, pointsPerMatch:Int, pointsToWin:Int) {
         
         //Initialize points
@@ -32,7 +34,6 @@ class GameLogic {
             
             let chosenPair = i //esto puede ser random de un banco de imágenes
             cards[i].pairId = chosenPair
-            print(chosenPair)
             cards[i+numPairs].pairId = chosenPair
             
             cards[i].id = i
@@ -45,11 +46,20 @@ class GameLogic {
     func tryMatch (cardToMath:Card) -> Bool {
         
         if let selected = self.selected {
-            if (selected.pairId == cardToMath.pairId && selected.id != cardToMath.id) {
+            
+            //MATCH!
+            if selected.pairId == cardToMath.pairId {
                 points = points+self.pointsPerMatch
                 selected.state = CardState.matched
                 cardToMath.state = CardState.matched
+                consecutiveMatches += 1
+                self.selected = nil
                 return true
+            }
+            //Nope
+            else{
+                consecutiveMatches = 0
+                self.selected = nil
             }
         }
         return false

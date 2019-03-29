@@ -9,12 +9,11 @@
 import Foundation
 
 enum CardState {
-    case covered,uncovered,matched
+    case covered,uncovered,matched, turning
 }
 
 class Card {
     var id:Int = -1
     var pairId:Int = -1
-    var state:CardState = CardState.covered
-    
+    var state:CardState = CardState.covered    
 }

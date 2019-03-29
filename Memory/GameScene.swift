@@ -83,12 +83,12 @@ class GameScene: SKScene, CardSpriteDelegate {
                 let index = i*grid.columns + j
                 
                 cardSprites.insert(CardSprite(), at: index)
-                cardSprites[index].card = cards[i]
+                cardSprites[index].card = cards[index]
                 cardSprites[index].delegate = self
                 //el back texture ya lo tienen todos igual pero si hay temas se pondria aqui
-                cardSprites[index].frontTexture = SKTexture(imageNamed: "card\(cardSprites[index].card.pairId+1)")
+                cardSprites[index].frontTexture = SKTexture(imageNamed: "card\(cards[index].pairId+1)")
                 
-                let cardPosX = gameFieldmargins.left + CGFloat(j) * (cardWidth + cardMargins.left)
+                let cardPosX = gameFieldmargins.left + cardWidth/2 + CGFloat(j) * (cardWidth + cardMargins.left)
                 let cardPosY = gameFieldmargins.bottom + CGFloat(i) * (cardHeight + cardMargins.bottom)
                 cardSprites[index].setCard(newSize: newSize, position : CGPoint(x: cardPosX, y:cardPosY))
                 
@@ -103,34 +103,39 @@ class GameScene: SKScene, CardSpriteDelegate {
         // Called before each frame is rendered
     }
     
-    func onTap(sender: CardSprite) {
+    func onTap(sender: CardSprite) { //¡esto pasa una vez la carta ya ha sido girada y está boca arriba!
         
-        //la ponemos cara arriba
-        sender.flip()
-        
-        //Si hay alguna seleccionada
+        //1A. Habia alguna seleccionada y la actual està boca arriba
         if let selected = gameLogic.selected {
-       
-            //Si no es match
-            if !gameLogic.tryMatch(cardToMath: sender.card) {
-                
-                //las volvemos a girar
-                sender.flip()
-                
+            
+            //2A. No es match
+            if sender.card.id != selected.id, !gameLogic.tryMatch(cardToMath: sender.card) {
                 for sprite in cardSprites {
                     if selected.id == sprite.card.id {
-                        sprite.flip()
+                        
+                        //las volvemos a girar
+                        sprite.run(
+                            SKAction.sequence([
+                                SKAction.run{
+                                    sprite.card.state = CardState.turning
+                                    sender.card.state = CardState.turning
+                                },
+                                SKAction.wait(forDuration: 0.5),
+                                SKAction.run {
+                                    sprite.card.state = CardState.uncovered
+                                    sender.card.state = CardState.uncovered
+                                    sprite.flip()
+                                    sender.flip()
+                                    return
+                                }]))
                     }
                 }
             }
-            
-            gameLogic.selected = nil
         }
+        //1B. No habia ninguna seleccionada
         else {
-            //Si no hay ninguna seleccionada
             gameLogic.selected = sender.card
         }
     
     }
-        
 }

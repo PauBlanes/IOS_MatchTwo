@@ -27,24 +27,45 @@ class CardSprite: SKSpriteNode {
         self.size = newSize
         self.anchorPoint = CGPoint(x: 0, y: 0)
         self.position = position
-    }
-    
-    func setMargin (margins:Directions){
-        position.x += margins.left
-        position.x -= margins.right
-        position.y += margins.bottom
-        position.y -= margins.top
-    }
-    
-    func flip () {
         
-        if card.state == CardState.covered {
-            self.card.state = CardState.uncovered
-            self.texture = frontTexture
-        }else if card.state == CardState.uncovered {
-            self.card.state = CardState.covered
-            self.texture = backTexture
-        }//i si está matched no hace nada
+        self.anchorPoint = CGPoint(x:0.5,y: 0.5)
+    }
+    
+    func flip () { //devuelve si ha terminado
+        //si está emparejada o girando nada
+        if self.card.state == CardState.matched || self.card.state == CardState.turning{
+            return
+        }
+        
+        //No está girando ni emparejada
+        var currentState = self.card.state
+        self.card.state = CardState.turning
+        var endAction = SKAction()
+        var newTexture = SKTexture()
+        
+        if currentState == CardState.covered {
+            newTexture = frontTexture
+            currentState = CardState.uncovered
+            endAction =
+                SKAction.run{
+                    if let delegate = self.delegate {
+                        delegate.onTap(sender: self) //solo si la hemos puesto boca arriba miramos que hacer
+                    }
+                }
+            
+        }else if currentState == CardState.uncovered {
+            newTexture = backTexture
+            currentState = CardState.covered
+        }
+        
+        var actions = [SKAction.scaleX(to: 0, duration: 0.15),
+                       SKAction.setTexture(newTexture),
+                       SKAction.scaleX(to: 1, duration: 0.15),
+                       SKAction.run{
+                            self.card.state = currentState
+                       }]
+        actions.append(endAction)
+        self.run(SKAction.sequence(actions))
         
     }
     
@@ -53,11 +74,8 @@ class CardSprite: SKSpriteNode {
         if let touch = touches.first, let parent = parent {
             
             if frame.contains(touch.location(in: parent)) {
-                if let delegate = delegate {
-                    delegate.onTap(sender: self)
-                }
-            }
-            
+                flip()
+            }            
         }
     }
 }
