@@ -9,7 +9,7 @@
 import Foundation
 
 enum CardState {
-    case covered,uncovered,matched, turning
+    case covered,uncovered,matched
 }
 
 class Card {

@@ -48,10 +48,12 @@ class GameViewController: UIViewController, MenuSceneDelegate {
         
     }
     
-    func goToGame(sender: MenuScene) {
+    func goToGame(sender: MenuScene, grid:Grid) {
         if let view = self.view as? SKView {
             let scene = GameScene(size: view.frame.size)
-            //scene.aboutDelegate = self
+            scene.grid.columns = grid.columns
+            scene.grid.rows = grid.rows
+            
             // Set the scale mode to scale to fit the window
             scene.scaleMode = .aspectFill
             

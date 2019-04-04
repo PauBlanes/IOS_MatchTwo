@@ -15,6 +15,10 @@ struct Directions {
     let left:CGFloat
     let right:CGFloat
 }
+struct Grid {
+    var rows:Int
+    var columns:Int
+}
 
 class GameScene: SKScene, CardSpriteDelegate {
     
@@ -25,7 +29,7 @@ class GameScene: SKScene, CardSpriteDelegate {
     
     private var gameLogic = GameLogic()
     
-    var grid = (rows:4, columns:4)
+    var grid = Grid(rows:4, columns:4)
     
     //var swipeRightGesture = UISwipeGestureRecognizer()
     
@@ -34,6 +38,13 @@ class GameScene: SKScene, CardSpriteDelegate {
         gameLogic.Start(numPairs: (grid.rows*grid.columns)/2, startingPoints: 0, pointsPerMatch: 10, pointsToWin: 60)
         
         spawnCards(view: view, cards : gameLogic.cards)
+        
+        //PUNTUACIÓN
+        let coinIcon = SKSpriteNode(imageNamed: "coin_icon")
+        coinIcon.setScale(0.5)
+        coinIcon.anchorPoint = CGPoint(x: 0,y: 1)
+        coinIcon.position = CGPoint(x: view.frame.width*0.02, y: view.frame.height*0.95)
+        addChild(coinIcon)
         
         //SWIPE
         /*swipeRightGesture =
@@ -57,7 +68,7 @@ class GameScene: SKScene, CardSpriteDelegate {
         //Defino margenes
         let gameFieldmargins = Directions(
             top: 0, //en este caso soolo utilizo el bottom porque no quiero deformar las texturas
-            bottom: 100,
+            bottom: view.frame.height*0.04,
             left: view.frame.width*0.02,
             right: view.frame.width*0.02)
         let cardMargins = Directions(
@@ -83,13 +94,13 @@ class GameScene: SKScene, CardSpriteDelegate {
                 let index = i*grid.columns + j
                 
                 cardSprites.insert(CardSprite(), at: index)
-                cardSprites[index].card = cards[index]
+                cardSprites[index].id = cards[index].id
                 cardSprites[index].delegate = self
                 //el back texture ya lo tienen todos igual pero si hay temas se pondria aqui
                 cardSprites[index].frontTexture = SKTexture(imageNamed: "card\(cards[index].pairId+1)")
                 
                 let cardPosX = gameFieldmargins.left + cardWidth/2 + CGFloat(j) * (cardWidth + cardMargins.left)
-                let cardPosY = gameFieldmargins.bottom + CGFloat(i) * (cardHeight + cardMargins.bottom)
+                let cardPosY = gameFieldmargins.bottom + cardHeight/2 + CGFloat(i) * (cardHeight + cardMargins.bottom)
                 cardSprites[index].setCard(newSize: newSize, position : CGPoint(x: cardPosX, y:cardPosY))
                 
                 addChild(cardSprites[index])
@@ -105,37 +116,15 @@ class GameScene: SKScene, CardSpriteDelegate {
     
     func onTap(sender: CardSprite) { //¡esto pasa una vez la carta ya ha sido girada y está boca arriba!
         
-        //1A. Habia alguna seleccionada y la actual està boca arriba
-        if let selected = gameLogic.selected {
-            
-            //2A. No es match
-            if sender.card.id != selected.id, !gameLogic.tryMatch(cardToMath: sender.card) {
-                for sprite in cardSprites {
-                    if selected.id == sprite.card.id {
-                        
-                        //las volvemos a girar
-                        sprite.run(
-                            SKAction.sequence([
-                                SKAction.run{
-                                    sprite.card.state = CardState.turning
-                                    sender.card.state = CardState.turning
-                                },
-                                SKAction.wait(forDuration: 0.5),
-                                SKAction.run {
-                                    sprite.card.state = CardState.uncovered
-                                    sender.card.state = CardState.uncovered
-                                    sprite.flip()
-                                    sender.flip()
-                                    return
-                                }]))
-                    }
-                }
+        gameLogic.cardSelected(cardId: sender.id, completed: findCardAndFlip)
+    
+    }
+    
+    func findCardAndFlip(cardId: Int, cardState: CardState, delay: Double) {
+        for sprite in self.cardSprites {
+            if sprite.id == cardId{
+                sprite.flip(to: cardState, withDelay: delay)
             }
         }
-        //1B. No habia ninguna seleccionada
-        else {
-            gameLogic.selected = sender.card
-        }
-    
     }
 }

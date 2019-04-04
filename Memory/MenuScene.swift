@@ -10,7 +10,7 @@ import SpriteKit
 import GameplayKit
 
 protocol MenuSceneDelegate: class {
-    func goToGame(sender: MenuScene)
+    func goToGame(sender: MenuScene, grid:Grid)
     func goToAbout(sender: MenuScene)
     func goToSettings(sender: MenuScene)
 }
@@ -31,6 +31,8 @@ class MenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
     private var rightArrowButton = ImageButton(imageNamed: "right_arrow")
     private var difficultyButton = Button(rect: CGRect(x: 0, y: 0, width: 200, height: 200), cornerRadius: 10)
     private var difficultyIndex = 0
+    
+    var grid = Grid(rows:0, columns:0)
     
     /*private var gameButton = Button(rect: CGRect(x: 0, y: 0, width: buttonWidth, height: buttonHeight), cornerRadius: 10)*/
     
@@ -88,6 +90,9 @@ class MenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
         rightArrowButton.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         addChild(rightArrowButton)
         
+        //Posem dificultat inicial
+        setDifficuty()
+        
         /*gameButton.setText(text: "Game")
         gameButton.fillColor = SKColor(red: 0.3, green: 0.4, blue: 0.5, alpha: 1.0)
         gameButton.isUserInteractionEnabled = true
@@ -113,7 +118,7 @@ class MenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
     
     func onTap(sender: Button) {
         if sender == difficultyButton {
-            menuDelegate?.goToGame(sender: self)
+            menuDelegate?.goToGame(sender: self, grid: grid)
         }
     }
     func onTap(sender: ImageButton) {
@@ -137,16 +142,25 @@ class MenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
     
     func setDifficuty () {
         if difficultyIndex == 0 {
-            difficultyButton.setText(text: "12 Diferent Pairs!")
+            difficultyButton.setText(text: "6 Diferent Pairs!")
             difficultyLabel.text = "EASY"
+            
+            grid.columns = 3
+            grid.rows = 4
         }
         else if difficultyIndex == 1 {
-            difficultyButton.setText(text: "24 Diferent Pairs!")
+            difficultyButton.setText(text: "10 Diferent Pairs!")
             difficultyLabel.text = "MEDIUM"
+            
+            grid.columns = 4
+            grid.rows = 5
         }
         else if difficultyIndex == 2 {
-            difficultyButton.setText(text: "36 Diferent Pairs!")
+            difficultyButton.setText(text: "15 Diferent Pairs!")
             difficultyLabel.text = "HARD"
+            
+            grid.columns = 5
+            grid.rows = 6
         }
     }
     

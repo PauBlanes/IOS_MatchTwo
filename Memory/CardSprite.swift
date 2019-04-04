@@ -14,14 +14,19 @@ protocol CardSpriteDelegate: class {
 
 class CardSprite: SKSpriteNode {
     
-    var card = Card()
+    //Variables de clase
+    static let flipTime = 0.3
+    static let waitUntilFlipBack = 0.5
+    static let backTexture: SKTexture = SKTexture(imageNamed: "back")
+    
     weak var delegate: CardSpriteDelegate?
     
-    let backTexture: SKTexture = SKTexture(imageNamed: "back")
-    var frontTexture: SKTexture = SKTexture(imageNamed: "card1")
+    var id = -1
+    
+    var frontTexture: SKTexture = SKTexture()
     
     func setCard (newSize:CGSize, position: CGPoint) {
-        self.texture = backTexture
+        self.texture = CardSprite.backTexture
         
         self.isUserInteractionEnabled = true
         self.size = newSize
@@ -31,42 +36,29 @@ class CardSprite: SKSpriteNode {
         self.anchorPoint = CGPoint(x:0.5,y: 0.5)
     }
     
-    func flip () { //devuelve si ha terminado
-        //si está emparejada o girando nada
-        if self.card.state == CardState.matched || self.card.state == CardState.turning{
-            return
-        }
+    func flip (to cardState:CardState, withDelay:Double){
         
-        //No está girando ni emparejada
-        var currentState = self.card.state
-        self.card.state = CardState.turning
-        var endAction = SKAction()
+        //1. No dejo que el user interactue mientras está girando
+        isUserInteractionEnabled = false
+        
+        //2. seteo textura
         var newTexture = SKTexture()
-        
-        if currentState == CardState.covered {
+        if cardState == CardState.uncovered {
             newTexture = frontTexture
-            currentState = CardState.uncovered
-            endAction =
-                SKAction.run{
-                    if let delegate = self.delegate {
-                        delegate.onTap(sender: self) //solo si la hemos puesto boca arriba miramos que hacer
-                    }
-                }
-            
-        }else if currentState == CardState.uncovered {
-            newTexture = backTexture
-            currentState = CardState.covered
+        }
+        else if cardState == CardState.covered {
+            newTexture = CardSprite.backTexture
         }
         
-        var actions = [SKAction.scaleX(to: 0, duration: 0.15),
-                       SKAction.setTexture(newTexture),
-                       SKAction.scaleX(to: 1, duration: 0.15),
-                       SKAction.run{
-                            self.card.state = currentState
-                       }]
-        actions.append(endAction)
-        self.run(SKAction.sequence(actions))
-        
+        //3. animación i al terrminarla vuelvo a activar interacción
+        self.run(SKAction.sequence([
+            SKAction.wait(forDuration: withDelay),
+            SKAction.scaleX(to: 0, duration: CardSprite.flipTime/2),
+            SKAction.setTexture(newTexture),
+            SKAction.scaleX(to: 1, duration: CardSprite.flipTime/2),
+            SKAction.run{
+                self.isUserInteractionEnabled = true
+            }]))
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -74,7 +66,9 @@ class CardSprite: SKSpriteNode {
         if let touch = touches.first, let parent = parent {
             
             if frame.contains(touch.location(in: parent)) {
-                flip()
+                if let delegate = self.delegate {
+                    delegate.onTap(sender: self) //solo si la hemos puesto boca arriba miramos que hacer
+                }
             }            
         }
     }

@@ -19,6 +19,7 @@ class GameLogic {
     
     var consecutiveMatches = 0
     
+    
     func Start(numPairs:Int, startingPoints:Int, pointsPerMatch:Int, pointsToWin:Int) {
         
         //Initialize points
@@ -32,7 +33,7 @@ class GameLogic {
         }
         for i in 0..<numPairs {
             
-            let chosenPair = i //esto puede ser random de un banco de imágenes
+            let chosenPair = i%13 //esto puede ser random de un banco de imágenes
             cards[i].pairId = chosenPair
             cards[i+numPairs].pairId = chosenPair
             
@@ -43,25 +44,79 @@ class GameLogic {
     }
     
     //FUNCTIONALITY
-    func tryMatch (cardToMath:Card) -> Bool {
-        
-        if let selected = self.selected {
-            
-            //MATCH!
-            if selected.pairId == cardToMath.pairId {
-                points = points+self.pointsPerMatch
-                selected.state = CardState.matched
-                cardToMath.state = CardState.matched
-                consecutiveMatches += 1
-                self.selected = nil
-                return true
-            }
-            //Nope
-            else{
-                consecutiveMatches = 0
-                self.selected = nil
+    func findCard (id: Int) -> Card {
+        for card in self.cards {
+            if card.id == id {
+                return card
             }
         }
-        return false
+        return Card()
+    }
+    
+    func tryMatch(card1:Card, card2:Card) -> Bool {
+        
+        if card2.pairId == card1.pairId {
+            card2.state = CardState.matched
+            card1.state = CardState.matched
+            self.selected = nil
+            points = points+self.pointsPerMatch
+            consecutiveMatches += 1
+            return true
+        }
+        else {
+            card2.state = CardState.covered
+            card1.state = CardState.covered
+            consecutiveMatches = 0
+            return false
+        }
+        
+    }
+    
+    func cardSelected(cardId:Int, completed : (_ cardId: Int,_ cardState: CardState,_ delay: Double) -> Void) {
+        
+        let card = findCard(id: cardId)
+        
+        //1. Está emparejada?
+        if card.state == CardState.matched {
+            return
+        }
+        
+        //2. está destapada?
+        if card.state == CardState.uncovered {
+            self.selected = nil
+            card.state = CardState.covered
+            completed(card.id, CardState.covered, 0)
+            return
+        }
+        
+        //3. está tapada?
+        if card.state == CardState.covered {
+            
+            //Si existe selected intentamos match
+            if let selected = self.selected {
+                
+                //Es match? -> boca arriba
+                if tryMatch(card1: card, card2: selected) {
+                    completed(card.id, CardState.uncovered, 0)
+                }
+                //no es match? giramos las dos
+                else {
+                    //Ponemos la actual boca arriba
+                    completed(card.id, CardState.uncovered, 0)
+                    
+                    //Esperamos y giramos las dos
+                    completed(card.id,CardState.covered,CardSprite.flipTime + CardSprite.waitUntilFlipBack)
+                    completed(selected.id,CardState.covered,CardSprite.flipTime + CardSprite.waitUntilFlipBack)
+                    
+                    self.selected = nil
+                }
+            }
+            //no hay selected? -> la seteo
+            else {
+                self.selected = card
+                card.state = CardState.uncovered
+                completed(card.id, CardState.uncovered, 0)
+            }
+        }
     }
 }
