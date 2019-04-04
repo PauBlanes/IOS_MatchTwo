@@ -20,7 +20,7 @@ struct Grid {
     var columns:Int
 }
 
-class GameScene: SKScene, CardSpriteDelegate {
+class GameScene: SKScene, CardSpriteDelegate {    
     
     private var label : SKLabelNode?
     private var spinnyNode : SKShapeNode?
@@ -31,37 +31,35 @@ class GameScene: SKScene, CardSpriteDelegate {
     
     var grid = Grid(rows:4, columns:4)
     
-    //var swipeRightGesture = UISwipeGestureRecognizer()
+    private var pointsLabel : SKLabelNode = SKLabelNode(fontNamed: "Verdana")
+    private var comboLabel : SKLabelNode = SKLabelNode(fontNamed: "Verdana")
+    var numCombos = 1
     
     override func didMove(to view: SKView) {
         
-        gameLogic.Start(numPairs: (grid.rows*grid.columns)/2, startingPoints: 0, pointsPerMatch: 10, pointsToWin: 60)
-        
+        gameLogic.Start(numPairs: (grid.rows*grid.columns)/2, startingPoints: 0, pointsPerMatch: 10)
         spawnCards(view: view, cards : gameLogic.cards)
         
         //PUNTUACIÓN
         let coinIcon = SKSpriteNode(imageNamed: "coin_icon")
         coinIcon.setScale(0.5)
         coinIcon.anchorPoint = CGPoint(x: 0,y: 1)
-        coinIcon.position = CGPoint(x: view.frame.width*0.02, y: view.frame.height*0.95)
+        coinIcon.position = CGPoint(x: view.frame.width*0.38, y: view.frame.height*0.95)
         addChild(coinIcon)
         
-        //SWIPE
-        /*swipeRightGesture =
-            UISwipeGestureRecognizer(target: self,
-                                     action: #selector(swipeRight(sender:)))
-            swipeRightGesture.direction = .right
-            view.addGestureRecognizer(swipeRightGesture)*/
+        pointsLabel.text = "\(gameLogic.points)"
+        pointsLabel.fontSize = 42
+        pointsLabel.position = CGPoint(x: view.frame.width*0.5 + pointsLabel.frame.width/2,
+                                       y: coinIcon.position.y - coinIcon.frame.height/2 - pointsLabel.frame.height/2)
+        addChild(pointsLabel)
         
+        comboLabel.text = "COMBO \n X\(gameLogic.consecutiveMatches)"
+        comboLabel.fontSize = 48
+        comboLabel.position = CGPoint(x: view.frame.width/2, y: view.frame.height/2)
+        comboLabel.alpha = 0
+        addChild(comboLabel)
+        numCombos = gameLogic.consecutiveMatches
     }
-    
-    /*@objc func swipeRight(sender: UISwipeGestureRecognizer){
-        print ("swipe detection")
-    }
-    
-    override func willMove(from view: SKView) {
-        view.removeGestureRecognizer(swipeRightGesture)
-    }*/
     
     func spawnCards (view: SKView, cards:[Card]) {
         
@@ -114,10 +112,33 @@ class GameScene: SKScene, CardSpriteDelegate {
         // Called before each frame is rendered
     }
     
-    func onTap(sender: CardSprite) { //¡esto pasa una vez la carta ya ha sido girada y está boca arriba!
+    func onTap(card: CardSprite) {
         
-        gameLogic.cardSelected(cardId: sender.id, completed: findCardAndFlip)
+        gameLogic.cardSelected(cardId: card.id, flipAnimation: findCardAndFlip)
+        
+        updateUI()
+    }
     
+    func updateUI () {
+        //Actualiazr puntuación
+        pointsLabel.text = "\(gameLogic.points)"
+        if let view = self.view {
+            pointsLabel.position.x = view.frame.width*0.5 + pointsLabel.frame.width/2
+        }
+        
+        //Actualizar combos
+        if gameLogic.consecutiveMatches == 1 {
+            numCombos = 1
+        }
+        else if gameLogic.consecutiveMatches > numCombos {
+            comboLabel.text = "COMBO \n X\(gameLogic.consecutiveMatches)"
+            comboLabel.run(SKAction.sequence([
+                SKAction.fadeIn(withDuration: 0.5),
+                SKAction.wait(forDuration: 1),
+                SKAction.fadeOut(withDuration: 0.5)]))
+            
+            numCombos = gameLogic.consecutiveMatches
+        }
     }
     
     func findCardAndFlip(cardId: Int, cardState: CardState, delay: Double) {

@@ -9,7 +9,7 @@
 import SpriteKit
 
 protocol CardSpriteDelegate: class {
-    func onTap(sender: CardSprite)
+    func onTap(card: CardSprite)
 }
 
 class CardSprite: SKSpriteNode {
@@ -67,7 +67,7 @@ class CardSprite: SKSpriteNode {
             
             if frame.contains(touch.location(in: parent)) {
                 if let delegate = self.delegate {
-                    delegate.onTap(sender: self) //solo si la hemos puesto boca arriba miramos que hacer
+                    delegate.onTap(card: self)
                 }
             }            
         }

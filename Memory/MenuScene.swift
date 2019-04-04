@@ -36,6 +36,7 @@ class MenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
     
     /*private var gameButton = Button(rect: CGRect(x: 0, y: 0, width: buttonWidth, height: buttonHeight), cornerRadius: 10)*/
     
+    //var swipeRightGesture = UISwipeGestureRecognizer()
     
     override func didMove(to view: SKView) {
         
@@ -114,7 +115,22 @@ class MenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
             SKAction.wait(forDuration: 0.5),
             SKAction.fadeOut(withDuration: 1)
                 ])))
+        
+        //SWIPE
+        /*swipeRightGesture =
+         UISwipeGestureRecognizer(target: self,
+         action: #selector(swipeRight(sender:)))
+         swipeRightGesture.direction = .right
+         view.addGestureRecognizer(swipeRightGesture)*/
     }
+    
+    /*@objc func swipeRight(sender: UISwipeGestureRecognizer){
+     print ("swipe detection")
+     }
+     
+     override func willMove(from view: SKView) {
+     view.removeGestureRecognizer(swipeRightGesture)
+     }*/
     
     func onTap(sender: Button) {
         if sender == difficultyButton {

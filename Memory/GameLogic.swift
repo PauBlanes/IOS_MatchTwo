@@ -12,20 +12,20 @@ class GameLogic {
     
     var points = 0
     var pointsPerMatch = 0
-    var pointsToWin = 0
     
     var cards = [Card]()
     var selected:Card?
     
-    var consecutiveMatches = 0
+    var consecutiveMatches = 1
     
     
-    func Start(numPairs:Int, startingPoints:Int, pointsPerMatch:Int, pointsToWin:Int) {
+    
+    func Start(numPairs:Int, startingPoints:Int, pointsPerMatch:Int) {
         
         //Initialize points
         self.points = startingPoints
         self.pointsPerMatch = pointsPerMatch
-        self.pointsToWin = pointsToWin
+        self.consecutiveMatches = 1
         
         //Initialize cards
         for _ in 0..<numPairs*2 {
@@ -41,6 +41,7 @@ class GameLogic {
             cards[i+numPairs].id = i+numPairs
         }
         cards.shuffle()
+        
     }
     
     //FUNCTIONALITY
@@ -58,21 +59,20 @@ class GameLogic {
         if card2.pairId == card1.pairId {
             card2.state = CardState.matched
             card1.state = CardState.matched
-            self.selected = nil
-            points = points+self.pointsPerMatch
+            points += (self.pointsPerMatch*self.consecutiveMatches)
             consecutiveMatches += 1
             return true
         }
         else {
             card2.state = CardState.covered
             card1.state = CardState.covered
-            consecutiveMatches = 0
+            consecutiveMatches = 1
             return false
         }
         
     }
     
-    func cardSelected(cardId:Int, completed : (_ cardId: Int,_ cardState: CardState,_ delay: Double) -> Void) {
+    func cardSelected(cardId:Int, flipAnimation: ((Int, CardState, Double) -> Void)?) {
         
         let card = findCard(id: cardId)
         
@@ -85,7 +85,11 @@ class GameLogic {
         if card.state == CardState.uncovered {
             self.selected = nil
             card.state = CardState.covered
-            completed(card.id, CardState.covered, 0)
+            
+            if let flipAnim = flipAnimation {
+                flipAnim(card.id, CardState.covered, 0)
+            }
+            
             return
         }
         
@@ -97,16 +101,26 @@ class GameLogic {
                 
                 //Es match? -> boca arriba
                 if tryMatch(card1: card, card2: selected) {
-                    completed(card.id, CardState.uncovered, 0)
+                    
+                    self.selected = nil
+                    
+                    //Si tenemos animación giramos
+                    if let flipAnim = flipAnimation {
+                        flipAnim(card.id, CardState.uncovered, 0)
+                    }
                 }
                 //no es match? giramos las dos
                 else {
-                    //Ponemos la actual boca arriba
-                    completed(card.id, CardState.uncovered, 0)
                     
-                    //Esperamos y giramos las dos
-                    completed(card.id,CardState.covered,CardSprite.flipTime + CardSprite.waitUntilFlipBack)
-                    completed(selected.id,CardState.covered,CardSprite.flipTime + CardSprite.waitUntilFlipBack)
+                    //si tenemos animacion giramos cartas
+                    if let flipAnim = flipAnimation {
+                        //Ponemos la actual boca arriba
+                        flipAnim(card.id, CardState.uncovered, 0)
+                        
+                        //Esperamos y giramos las dos
+                        flipAnim(card.id,CardState.covered,CardSprite.flipTime + CardSprite.waitUntilFlipBack)
+                        flipAnim(selected.id,CardState.covered,CardSprite.flipTime + CardSprite.waitUntilFlipBack)
+                    }
                     
                     self.selected = nil
                 }
@@ -115,7 +129,11 @@ class GameLogic {
             else {
                 self.selected = card
                 card.state = CardState.uncovered
-                completed(card.id, CardState.uncovered, 0)
+                
+                //Si tenemos animación giramos carta
+                if let flipAnim = flipAnimation {
+                    flipAnim(card.id, CardState.uncovered, 0)
+                }
             }
         }
     }
