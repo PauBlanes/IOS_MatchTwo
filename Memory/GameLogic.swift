@@ -110,14 +110,12 @@ class GameLogic {
                 //Es match? -> boca arriba
                 if tryMatch(card1: card, card2: selected) {
                     
-                    self.selected = nil
-                    
                     //Si tenemos animación giramos
                     if let flipAnim = flipAnimation {
                         flipAnim(card.id, CardState.uncovered, 0)
                     }
                 }
-                //no es match? giramos las dos
+                //no es match? tapamos las dos
                 else {
                     
                     //si tenemos animacion giramos cartas
@@ -129,11 +127,11 @@ class GameLogic {
                         flipAnim(card.id,CardState.covered,CardSprite.flipTime + CardSprite.waitUntilFlipBack)
                         flipAnim(selected.id,CardState.covered,CardSprite.flipTime + CardSprite.waitUntilFlipBack)
                     }
-                    
-                    self.selected = nil
                 }
+                
+                self.selected = nil
             }
-            //no hay selected? -> la seteo
+            //no hay selected? -> esta será el selected
             else {
                 self.selected = card
                 card.state = CardState.uncovered
