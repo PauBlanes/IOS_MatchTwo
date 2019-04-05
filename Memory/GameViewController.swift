@@ -10,7 +10,7 @@ import UIKit
 import SpriteKit
 import GameplayKit
 
-class GameViewController: UIViewController, MenuSceneDelegate {
+class GameViewController: UIViewController, SceneControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,7 +18,7 @@ class GameViewController: UIViewController, MenuSceneDelegate {
         if let view = self.view as? SKView {
             // Load the SKScene from 'GameScene.sks'
             let scene = MenuScene(size: view.frame.size)
-            scene.menuDelegate = self
+            scene.sceneControllerDelegate = self
             // Set the scale mode to scale to fit the window
             scene.scaleMode = .aspectFill
             
@@ -48,12 +48,24 @@ class GameViewController: UIViewController, MenuSceneDelegate {
         
     }
     
+    func goToMenu(sender: SKScene){
+        if let view = self.view as? SKView {
+            let scene = MenuScene(size: view.frame.size)
+            scene.sceneControllerDelegate = self
+            // Set the scale mode to scale to fit the window
+            scene.scaleMode = .aspectFill
+            
+            // Present the scene
+            view.presentScene(scene)
+        }
+    }
+    
     func goToGame(sender: MenuScene, grid:Grid) {
         if let view = self.view as? SKView {
             let scene = GameScene(size: view.frame.size)
             scene.grid.columns = grid.columns
             scene.grid.rows = grid.rows
-            
+            scene.sceneControllerDelegate = self
             // Set the scale mode to scale to fit the window
             scene.scaleMode = .aspectFill
             
@@ -65,7 +77,8 @@ class GameViewController: UIViewController, MenuSceneDelegate {
     func goToSettings(sender: MenuScene) {
         if let view = self.view as? SKView {
             let scene = SettingsScene(size: view.frame.size)
-            //scene.aboutDelegate = self
+            scene.sceneControllerDelegate = self
+            
             // Set the scale mode to scale to fit the window
             scene.scaleMode = .aspectFill
             

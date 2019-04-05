@@ -9,15 +9,16 @@
 import SpriteKit
 import GameplayKit
 
-protocol MenuSceneDelegate: class {
+protocol SceneControllerDelegate: class {
     func goToGame(sender: MenuScene, grid:Grid)
     func goToAbout(sender: MenuScene)
     func goToSettings(sender: MenuScene)
+    func goToMenu (sender: SKScene)
 }
 
 class MenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
     
-    weak var menuDelegate: MenuSceneDelegate?
+    weak var sceneControllerDelegate: SceneControllerDelegate?
     
     private var label : SKLabelNode = SKLabelNode(fontNamed: "Futura")
     private var difficultyLabel : SKLabelNode = SKLabelNode(fontNamed: "Verdana")
@@ -134,12 +135,12 @@ class MenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
     
     func onTap(sender: Button) {
         if sender == difficultyButton {
-            menuDelegate?.goToGame(sender: self, grid: grid)
+            sceneControllerDelegate?.goToGame(sender: self, grid: grid)
         }
     }
     func onTap(sender: ImageButton) {
         if sender == settingsButton {
-            menuDelegate?.goToSettings(sender: self)
+            sceneControllerDelegate?.goToSettings(sender: self)
         }
         else if sender == rankingsButton {
             print("le han dado a rankings")

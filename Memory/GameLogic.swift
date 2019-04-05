@@ -16,16 +16,18 @@ class GameLogic {
     var cards = [Card]()
     var selected:Card?
     
-    var consecutiveMatches = 1
+    var consecutiveMatches = 0
+    var pairsMatched = 0
     
+    var levelTimerValue = 0
     
-    
-    func Start(numPairs:Int, startingPoints:Int, pointsPerMatch:Int) {
+    func Start(numPairs:Int, startingPoints:Int, pointsPerMatch:Int, levelTimerInSeconds: Int) {
         
         //Initialize points
         self.points = startingPoints
         self.pointsPerMatch = pointsPerMatch
-        self.consecutiveMatches = 1
+        self.levelTimerValue = levelTimerInSeconds
+        resetCombos()
         
         //Initialize cards
         for _ in 0..<numPairs*2 {
@@ -59,17 +61,23 @@ class GameLogic {
         if card2.pairId == card1.pairId {
             card2.state = CardState.matched
             card1.state = CardState.matched
-            points += (self.pointsPerMatch*self.consecutiveMatches)
+            levelTimerValue += 10
             consecutiveMatches += 1
+            pairsMatched += 1
+            points += (self.pointsPerMatch*self.consecutiveMatches)
             return true
         }
         else {
             card2.state = CardState.covered
             card1.state = CardState.covered
-            consecutiveMatches = 1
+            resetCombos()
             return false
         }
         
+    }
+    
+    func resetCombos() {
+        self.consecutiveMatches = 0
     }
     
     func cardSelected(cardId:Int, flipAnimation: ((Int, CardState, Double) -> Void)?) {
