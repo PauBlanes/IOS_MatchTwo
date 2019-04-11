@@ -18,6 +18,9 @@
 		1E16FC8D2237E16C00132EB3 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E16FC8C2237E16C00132EB3 /* Button.swift */; };
 		1E16FC8F2237E21100132EB3 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E16FC8E2237E21100132EB3 /* MenuScene.swift */; };
 		1E16FC912237E94600132EB3 /* ImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E16FC902237E94600132EB3 /* ImageButton.swift */; };
+		1E222144225F69DC0061F0B2 /* Difficulty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E222143225F69DC0061F0B2 /* Difficulty.swift */; };
+		1E222146225F73900061F0B2 /* AudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E222145225F73900061F0B2 /* AudioController.swift */; };
+		1E222148225F7C320061F0B2 /* Music in Resources */ = {isa = PBXBuildFile; fileRef = 1E222147225F7C320061F0B2 /* Music */; };
 		1E32A1772243C631000AADAA /* GameLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E32A1762243C631000AADAA /* GameLogic.swift */; };
 		1E32A1792243C707000AADAA /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E32A1782243C707000AADAA /* Card.swift */; };
 		1E4B1BE3224E547000500F86 /* preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4B1BE2224E547000500F86 /* preferences.swift */; };
@@ -39,6 +42,9 @@
 		1E16FC8C2237E16C00132EB3 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		1E16FC8E2237E21100132EB3 /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
 		1E16FC902237E94600132EB3 /* ImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageButton.swift; sourceTree = "<group>"; };
+		1E222143225F69DC0061F0B2 /* Difficulty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Difficulty.swift; sourceTree = "<group>"; };
+		1E222145225F73900061F0B2 /* AudioController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioController.swift; sourceTree = "<group>"; };
+		1E222147225F7C320061F0B2 /* Music */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Music; sourceTree = "<group>"; };
 		1E32A1762243C631000AADAA /* GameLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameLogic.swift; sourceTree = "<group>"; };
 		1E32A1782243C707000AADAA /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		1E4B1BE2224E547000500F86 /* preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = preferences.swift; sourceTree = "<group>"; };
@@ -76,6 +82,7 @@
 		1E16FC732237E10300132EB3 /* Memory */ = {
 			isa = PBXGroup;
 			children = (
+				1E222147225F7C320061F0B2 /* Music */,
 				1E16FC742237E10300132EB3 /* AppDelegate.swift */,
 				1E16FC782237E10300132EB3 /* Actions.sks */,
 				1E16FC762237E10300132EB3 /* GameScene.sks */,
@@ -93,6 +100,8 @@
 				1E32A1762243C631000AADAA /* GameLogic.swift */,
 				1E32A1782243C707000AADAA /* Card.swift */,
 				1E4B1BE2224E547000500F86 /* preferences.swift */,
+				1E222143225F69DC0061F0B2 /* Difficulty.swift */,
+				1E222145225F73900061F0B2 /* AudioController.swift */,
 			);
 			path = Memory;
 			sourceTree = "<group>";
@@ -155,6 +164,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1E222148225F7C320061F0B2 /* Music in Resources */,
 				1E16FC802237E10300132EB3 /* Main.storyboard in Resources */,
 				1E16FC772237E10300132EB3 /* GameScene.sks in Resources */,
 				1E16FC822237E10400132EB3 /* Assets.xcassets in Resources */,
@@ -172,6 +182,7 @@
 			files = (
 				1E16FC7B2237E10300132EB3 /* GameScene.swift in Sources */,
 				1E16FC7D2237E10300132EB3 /* GameViewController.swift in Sources */,
+				1E222144225F69DC0061F0B2 /* Difficulty.swift in Sources */,
 				1EDF2946223A8E1900B4F56A /* SettingsScene.swift in Sources */,
 				1E32A1772243C631000AADAA /* GameLogic.swift in Sources */,
 				1E16FC8F2237E21100132EB3 /* MenuScene.swift in Sources */,
@@ -180,6 +191,7 @@
 				1E16FC912237E94600132EB3 /* ImageButton.swift in Sources */,
 				1E32A1792243C707000AADAA /* Card.swift in Sources */,
 				1E16FC8D2237E16C00132EB3 /* Button.swift in Sources */,
+				1E222146225F73900061F0B2 /* AudioController.swift in Sources */,
 				1EDF2948223A9B1E00B4F56A /* CardSprite.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

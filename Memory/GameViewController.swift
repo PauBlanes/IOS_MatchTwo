@@ -12,6 +12,7 @@ import GameplayKit
 
 class GameViewController: UIViewController, SceneControllerDelegate {
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -44,10 +45,6 @@ class GameViewController: UIViewController, SceneControllerDelegate {
         return true
     }
     
-    func goToAbout(sender: MenuScene) {
-        
-    }
-    
     func goToMenu(sender: SKScene){
         if let view = self.view as? SKView {
             let scene = MenuScene(size: view.frame.size)
@@ -60,7 +57,7 @@ class GameViewController: UIViewController, SceneControllerDelegate {
         }
     }
     
-    func goToGame(sender: MenuScene, grid:Grid) {
+    func goToGame(sender: SKScene, grid:Grid) {
         if let view = self.view as? SKView {
             let scene = GameScene(size: view.frame.size)
             scene.grid.columns = grid.columns

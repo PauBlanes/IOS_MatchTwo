@@ -11,9 +11,9 @@ import GameplayKit
 
 struct Directions {
     var top:CGFloat
-    let bottom:CGFloat
-    let left:CGFloat
-    let right:CGFloat
+    var bottom:CGFloat
+    var left:CGFloat
+    var right:CGFloat
 }
 struct Grid {
     var rows:Int
@@ -42,10 +42,14 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
     var levelTimerLabel = SKLabelNode(fontNamed: "Verdana")
     var matchEnded = false
     
+    //End game buttons
+    let toMenu = ImageButton(imageNamed: "back_icon")
+    let restart = ImageButton(imageNamed: "restart_icon")
+    let nextLevel = ImageButton(imageNamed: "next_icon")
     
     override func didMove(to view: SKView) {
         
-        gameLogic.Start(numPairs: (grid.rows*grid.columns)/2, startingPoints: 0, pointsPerMatch: 10, levelTimerInSeconds: 10)
+        gameLogic.Start(numPairs: (grid.rows*grid.columns)/2, startingPoints: 0, pointsPerMatch: 10, levelTimerInSeconds: 120)
         spawnCards(view: view, cards : gameLogic.cards)
         
         //PUNTUACIÓN
@@ -61,26 +65,21 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
                                        y: coinIcon.position.y - coinIcon.frame.height/2 - pointsLabel.frame.height/2)
         addChild(pointsLabel)
         
-        comboLabel.text = "COMBO \n X\(gameLogic.consecutiveMatches)"
-        comboLabel.fontSize = 48
-        comboLabel.position = CGPoint(x: view.frame.width/2, y: view.frame.height/2)
-        comboLabel.alpha = 0
-        addChild(comboLabel)
-        numCombos = gameLogic.consecutiveMatches
         
         //GO BACK
-        backButton.position = CGPoint(x: view.frame.width * 0.1, y: view.frame.height*0.95)
+        backButton.position = CGPoint(x: view.frame.width * 0.1, y: coinIcon.position.y - coinIcon.frame.height/2)
         backButton.isUserInteractionEnabled = true
         backButton.delegate = self
         backButton.setScale(0.5)
         backButton.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         addChild(backButton)
         
-        //Timer
+        //TIMER
+        setTimerText()
         levelTimerLabel.fontSize = 20
         levelTimerLabel.position = CGPoint(x: view.frame.width*0.8,
-                                           y: coinIcon.position.y - coinIcon.frame.height/2 - levelTimerLabel.frame.height/2)
-        setTimerText()
+                                           y: coinIcon.position.y - coinIcon.frame.height/2-levelTimerLabel.frame.height/2)
+        
         addChild(levelTimerLabel)
         
         let wait = SKAction.wait(forDuration: 1) //esperar 1 segon
@@ -97,21 +96,28 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
             self.setTimerText()
         })
         let sequence = SKAction.sequence([wait,block])
-        run(SKAction.repeatForever(sequence), withKey: "countdown")
+        levelTimerLabel.run(SKAction.repeatForever(sequence), withKey: "countdown")
         
+        //COMBOS
+        comboLabel.text = "COMBO \n X\(gameLogic.consecutiveMatches)"
+        comboLabel.fontSize = 48
+        comboLabel.position = CGPoint(x: view.frame.width/2, y: view.frame.height/2)
+        comboLabel.alpha = 0
+        addChild(comboLabel)
+        numCombos = gameLogic.consecutiveMatches
     }
     
     func spawnCards (view: SKView, cards:[Card]) {
         
         //Defino margenes
         let gameFieldmargins = Directions(
-            top: 0, //en este caso solo utilizo el bottom porque no quiero deformar las texturas
+            top: view.frame.height*0.12, //para que quede por debajo del contador
             bottom: view.frame.height*0.04,
             left: view.frame.width*0.02,
             right: view.frame.width*0.02)
-        let cardMargins = Directions(
+        var cardMargins = Directions(
             top: 0,
-            bottom: 10,
+            bottom: 0,
             left: view.frame.width*0.02,
             right: 0)
         
@@ -124,6 +130,11 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
         let cardWidth = (gameFieldWidth - (cardMargins.left*CGFloat(grid.columns-1)))/CGFloat(grid.columns)
         let cardHeight = cardWidth * cardTextureAspectRatio
         let newSize = CGSize(width: cardWidth, height: cardHeight)
+        
+        //Así la grid siempre ocupara la misma height de pantalla independientemente de las cartas
+        cardMargins.bottom = (view.frame.height - gameFieldmargins.top - gameFieldmargins.bottom
+                            - (cardHeight*CGFloat(grid.rows)))/CGFloat(grid.rows-1)
+        
         
         //Create cards
         for i in 0..<grid.rows {
@@ -165,9 +176,21 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
         }
     }
     func onTap(sender: ImageButton) {
-        if sender == backButton, !matchEnded{
-            sceneControllerDelegate?.goToMenu(sender: self)
+        
+        switch sender {
+            case backButton:
+                sceneControllerDelegate?.goToMenu(sender: self)
+            case toMenu:
+                sceneControllerDelegate?.goToMenu(sender: self)
+            case restart:
+                sceneControllerDelegate?.goToGame(sender: self, grid: grid)
+            case nextLevel:
+                MenuScene.diffIndex += 1
+                sceneControllerDelegate?.goToGame(sender: self, grid: MenuScene.difficulties[MenuScene.diffIndex].grid)
+            default:
+                    print("something went wrong")
         }
+        
     }
     
     //UI
@@ -204,57 +227,100 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
         
         if let view = self.view {
             
-            var endText = ""
-            if won {
-                endText = "YOU WIN!"
-                
-                let bgLabel = SKShapeNode(rectOf: CGSize(width: view.frame.width*0.85, height: view.frame.height/2))
-                bgLabel.fillColor = SKColor(red: 0.3, green: 0.4, blue: 0.5, alpha: 0.75)
-                bgLabel.position = CGPoint(x: view.frame.width/2, y: view.frame.height/2)
-                addChild(bgLabel)
-                
-                let scoreLabel = SKLabelNode(fontNamed: "Verdana")
-                scoreLabel.text = "Your score is: \(gameLogic.points)"
-                scoreLabel.fontSize = 35
-                scoreLabel.position = CGPoint(x: view.frame.width/2, y: view.frame.height*0.4)
-                scoreLabel.alpha = 0
-                addChild(scoreLabel)
-                
-                scoreLabel.run(SKAction.fadeIn(withDuration: 1))
-                
-                let timeLabel = SKLabelNode(fontNamed: "Verdana")
-                timeLabel.text = "Time left: \(Int(self.gameLogic.levelTimerValue/60)):\(self.gameLogic.levelTimerValue%60)"
-                timeLabel.fontSize = 35
-                timeLabel.position = CGPoint(x: view.frame.width/2, y: view.frame.height*0.35)
-                timeLabel.alpha = 0
-                addChild(timeLabel)
-                
-                timeLabel.run(SKAction.fadeIn(withDuration: 1))
-                
-            } else {
-                endText = "YOU LOSE..."
-                
-                let bgLabel = SKShapeNode(rectOf: CGSize(width: view.frame.width*0.85, height: view.frame.height*0.25))
-                bgLabel.fillColor = SKColor(red: 0.3, green: 0.4, blue: 0.5, alpha: 0.75)
-                bgLabel.position = CGPoint(x: view.frame.width/2, y: view.frame.height/2)
-                addChild(bgLabel)
-            }
-            
-            let endMatchLabel = SKLabelNode(fontNamed: "Verdana")
-            endMatchLabel.text = endText
-            endMatchLabel.fontSize = 54
-            endMatchLabel.position = CGPoint(x: view.frame.width/2, y: view.frame.height/2)
-            endMatchLabel.alpha = 0
-            addChild(endMatchLabel)
-            
-            endMatchLabel.run(SKAction.sequence([
-                SKAction.fadeIn(withDuration: 1),
-                SKAction.wait(forDuration: 5),
-                SKAction.run{self.sceneControllerDelegate?.goToMenu(sender: self)}]))
-            
+            //Equivalente a pause
             levelTimerLabel.removeAllActions()
             comboLabel.removeAllActions()
             comboLabel.alpha = 0
+            backButton.isUserInteractionEnabled = false
+            for sprite in cardSprites {
+                sprite.isUserInteractionEnabled = false
+            }
+            
+            let fadeInAction = SKAction.fadeIn(withDuration: 1)
+            
+            //CANVAS
+            let bgLabel = SKShapeNode(rectOf: CGSize(width: view.frame.width*0.85, height: view.frame.height/2))
+            bgLabel.fillColor = SKColor(red: 0.3, green: 0.4, blue: 0.5, alpha: 0.75)
+            bgLabel.position = CGPoint(x: view.frame.width/2, y: view.frame.height/2)
+            bgLabel.alpha = 0
+            addChild(bgLabel)
+            
+            //textos
+            let winTextLabel = SKLabelNode(fontNamed: "Verdana")
+            winTextLabel.fontSize = 54
+            winTextLabel.position = CGPoint(x: 0, y: bgLabel.frame.height*0.15)
+            winTextLabel.alpha = 0
+            bgLabel.run(fadeInAction)
+            winTextLabel.run(fadeInAction)
+            bgLabel.addChild(winTextLabel)
+            
+            let scoreLabel = SKLabelNode(fontNamed: "Verdana")
+            scoreLabel.text = "Your score is: \(gameLogic.points)"
+            scoreLabel.fontSize = 35
+            scoreLabel.position = CGPoint(x: 0, y: -bgLabel.frame.height*0.10)
+            scoreLabel.alpha = 0
+            scoreLabel.run(fadeInAction)
+            bgLabel.addChild(scoreLabel)
+            
+            if (won) {
+                let timeLabel = SKLabelNode(fontNamed: "Verdana")
+                timeLabel.text = "Time left: \(Int(self.gameLogic.levelTimerValue/60)):\(self.gameLogic.levelTimerValue%60)"
+                timeLabel.fontSize = 35
+                timeLabel.position = CGPoint(x: 0, y: -bgLabel.frame.height*0.20)
+                timeLabel.alpha = 0
+                timeLabel.run(fadeInAction)
+                bgLabel.addChild(timeLabel)
+            }
+            
+            
+            //Botones
+            toMenu.position = CGPoint(x: -bgLabel.frame.width*0.3, y: -bgLabel.frame.height*0.4)
+            toMenu.isUserInteractionEnabled = true
+            toMenu.delegate = self
+            toMenu.setScale(0.5)
+            toMenu.alpha = 0
+            toMenu.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+            toMenu.run(fadeInAction)
+            bgLabel.addChild(toMenu)
+            
+            restart.position = CGPoint(x: 0, y: -bgLabel.frame.height*0.4)
+            restart.isUserInteractionEnabled = true
+            restart.delegate = self
+            restart.setScale(0.5)
+            restart.alpha = 0
+            restart.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+            restart.run(fadeInAction)
+            bgLabel.addChild(restart)
+            
+            
+            if (MenuScene.diffIndex < MenuScene.difficulties.count-1 && won) {
+                nextLevel.position = CGPoint(x: bgLabel.frame.width*0.3, y: -bgLabel.frame.height*0.4)
+                nextLevel.isUserInteractionEnabled = true
+                nextLevel.delegate = self
+                nextLevel.setScale(0.5)
+                nextLevel.alpha = 0
+                nextLevel.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+                nextLevel.run(fadeInAction)
+                bgLabel.addChild(nextLevel)
+            }
+            
+            if won {
+                winTextLabel.text = "YOU WIN!"
+                
+            } else {
+                winTextLabel.text = "YOU LOSE..."
+                
+                bgLabel.run(SKAction.resize(toWidth: view.frame.height*0.25, duration: 0))
+            }
+            
+            
+            
+            
+            
+            
+            
+            
+            
         }
         
     }

@@ -10,9 +10,21 @@ import Foundation
 
 class Preferences {
     
-    let k_SOUND_ON = "SOUND_ON"
+    private static let k_SOUND_ON = "SOUND_ON"
+    private static let k_DIFFICULTY = "K_DIFF"
     
-    func isSoundOn() -> Bool {
+    static func getDifficulty() -> Int {
+        if let _ = UserDefaults.standard.object(forKey: k_DIFFICULTY){ //Existe
+            return UserDefaults.standard.integer(forKey: k_DIFFICULTY)
+        }
+        setDifficulty(value: 0)
+        return 0
+    }
+    static func setDifficulty(value: Int) {
+        UserDefaults.standard.set(value, forKey: k_DIFFICULTY)
+    }
+    
+    static func isSoundOn() -> Bool {
         
         if let _ = UserDefaults.standard.object(forKey: k_SOUND_ON){ //existe ?
             //hay diferentes niveles de user defaults
@@ -22,7 +34,7 @@ class Preferences {
         return true //si no existe devolvemos true, para que al inicio sea true
         
     }
-    func toggleSound() {
+    static func toggleSound() {
         let soundOn = isSoundOn()
         UserDefaults.standard.set(!soundOn, forKey: k_SOUND_ON) //si no existe creará a key
     }

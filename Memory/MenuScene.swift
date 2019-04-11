@@ -10,8 +10,7 @@ import SpriteKit
 import GameplayKit
 
 protocol SceneControllerDelegate: class {
-    func goToGame(sender: MenuScene, grid:Grid)
-    func goToAbout(sender: MenuScene)
+    func goToGame(sender: SKScene, grid:Grid)
     func goToSettings(sender: MenuScene)
     func goToMenu (sender: SKScene)
 }
@@ -20,38 +19,36 @@ class MenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
     
     weak var sceneControllerDelegate: SceneControllerDelegate?
     
-    private var label : SKLabelNode = SKLabelNode(fontNamed: "Futura")
-    private var difficultyLabel : SKLabelNode = SKLabelNode(fontNamed: "Verdana")
+    private var title : SKLabelNode = SKLabelNode(fontNamed: "Futura")
     
-    //private var playButton = ImageButton(imageNamed: "play_icon-1")
-    //private var prova:Button! //NO hacer esto
     private var settingsButton = ImageButton(imageNamed: "settings_icon")
     private var rankingsButton = ImageButton(imageNamed: "leaderboard_icon")
     
+    //Dificulty
+    private var difficultyLabel : SKLabelNode = SKLabelNode(fontNamed: "Verdana")
     private var leftArrowButton = ImageButton(imageNamed: "left_arrow")
     private var rightArrowButton = ImageButton(imageNamed: "right_arrow")
     private var difficultyButton = Button(rect: CGRect(x: 0, y: 0, width: 200, height: 200), cornerRadius: 10)
-    private var difficultyIndex = 0
     
-    var grid = Grid(rows:0, columns:0)
-    
-    /*private var gameButton = Button(rect: CGRect(x: 0, y: 0, width: buttonWidth, height: buttonHeight), cornerRadius: 10)*/
+    static var diffIndex = Preferences.getDifficulty()
+    static var difficulties:[Difficulty] = [
+        Difficulty(tag: "EASY",description: "6 Diferent Pairs!",grid: Grid(rows: 4, columns: 3)),
+        Difficulty(tag: "MEDIUM",description: "10 Diferent Pairs!" ,grid: Grid(rows: 5, columns: 4)),
+        Difficulty(tag: "HARD",description: "15 Diferent Pairs!" , grid: Grid(rows: 6, columns: 5))
+    ]
     
     //var swipeRightGesture = UISwipeGestureRecognizer()
+    
+    //Musica
+    
     
     override func didMove(to view: SKView) {
         
         //Background
         self.backgroundColor = UIColor(red: 1, green: 0.5, blue: 0.5, alpha: 1)
+        //AudioController.shared.play()
         
         //Set the butons
-        /*playButton.position = CGPoint(x: view.frame.width/2, y: view.frame.height * 0.45)
-        playButton.isUserInteractionEnabled = true
-        playButton.delegate = self
-        playButton.setScale(1.2)
-        playButton.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        addChild(playButton)*/
-        
         rankingsButton.position = CGPoint(x: view.frame.width/2, y: view.frame.height * 0.15)
         rankingsButton.isUserInteractionEnabled = true
         rankingsButton.delegate = self
@@ -66,18 +63,15 @@ class MenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
         addChild(settingsButton)
         
         //TRIAR DIFICULTAT
-        difficultyButton.setText(text: "12 Diferent Pairs!")
         difficultyButton.fillColor = SKColor(red: 0.3, green: 0.4, blue: 0.5, alpha: 1.0)
         difficultyButton.isUserInteractionEnabled = true
         difficultyButton.delegate = self
-        
         difficultyButton.position = CGPoint(x: (view.frame.width / 2.0) - (difficultyButton.frame.width / 2.0), y: view.frame.height * 0.30)
         addChild(difficultyButton)
         
-        addChild(difficultyLabel)
-        difficultyLabel.text = "EASY"
         difficultyLabel.fontSize = 22
         difficultyLabel.position = CGPoint(x: view.center.x, y: difficultyButton.position.y + difficultyButton.frame.height + 5)
+        addChild(difficultyLabel)
         
         leftArrowButton.position = CGPoint(x: view.frame.width * 0.1, y: difficultyButton.position.y + difficultyButton.frame.height/2)
         leftArrowButton.isUserInteractionEnabled = true
@@ -93,24 +87,15 @@ class MenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
         addChild(rightArrowButton)
         
         //Posem dificultat inicial
-        setDifficuty()
-        
-        /*gameButton.setText(text: "Game")
-        gameButton.fillColor = SKColor(red: 0.3, green: 0.4, blue: 0.5, alpha: 1.0)
-        gameButton.isUserInteractionEnabled = true
-        gameButton.delegate = self
-        gameButton.position = CGPoint(x: (view.frame.width / 2.0) - (MenuScene.buttonWidth / 2.0), y: view.frame.height * 0.5)
-        gameButton.highlightColor = .yellow
-        gameButton.strokeColor = .red
-        addChild(gameButton)*/
+        updateDifficultyUI()
         
         //Title
-        addChild(label)
-        label.text = "MATCH TWO!"
-        label.fontSize = 36
-        label.position = CGPoint(x: view.center.x, y: view.frame.height * 0.75)
-        label.alpha = 0.0
-        label.run(SKAction.repeatForever(
+        addChild(title)
+        title.text = "MATCH TWO!"
+        title.fontSize = 36
+        title.position = CGPoint(x: view.center.x, y: view.frame.height * 0.75)
+        title.alpha = 0.0
+        title.run(SKAction.repeatForever(
             SKAction.sequence([
             SKAction.fadeIn(withDuration: 1.5),
             SKAction.wait(forDuration: 0.5),
@@ -135,7 +120,7 @@ class MenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
     
     func onTap(sender: Button) {
         if sender == difficultyButton {
-            sceneControllerDelegate?.goToGame(sender: self, grid: grid)
+            sceneControllerDelegate?.goToGame(sender: self, grid: MenuScene.difficulties[MenuScene.diffIndex].grid)
         }
     }
     func onTap(sender: ImageButton) {
@@ -143,42 +128,24 @@ class MenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
             sceneControllerDelegate?.goToSettings(sender: self)
         }
         else if sender == rankingsButton {
-            print("le han dado a rankings")
+            print("FIREBASE")
         }else if sender == leftArrowButton {
-            difficultyIndex -= 1
-            if difficultyIndex < 0 {
-                difficultyIndex = 2
+            MenuScene.diffIndex -= 1
+            if MenuScene.diffIndex < 0 {
+                MenuScene.diffIndex = MenuScene.difficulties.count-1
             }
-            setDifficuty()
+            updateDifficultyUI()
         }
         else if sender == rightArrowButton {
-            difficultyIndex = (difficultyIndex + 1)%3
-            setDifficuty()
+            MenuScene.diffIndex = (MenuScene.diffIndex + 1)%MenuScene.difficulties.count
+            updateDifficultyUI()
         }
     }
     
-    func setDifficuty () {
-        if difficultyIndex == 0 {
-            difficultyButton.setText(text: "6 Diferent Pairs!")
-            difficultyLabel.text = "EASY"
-            
-            grid.columns = 3
-            grid.rows = 4
-        }
-        else if difficultyIndex == 1 {
-            difficultyButton.setText(text: "10 Diferent Pairs!")
-            difficultyLabel.text = "MEDIUM"
-            
-            grid.columns = 4
-            grid.rows = 5
-        }
-        else if difficultyIndex == 2 {
-            difficultyButton.setText(text: "15 Diferent Pairs!")
-            difficultyLabel.text = "HARD"
-            
-            grid.columns = 5
-            grid.rows = 6
-        }
+    func updateDifficultyUI () {
+        difficultyButton.setText(text: MenuScene.difficulties[MenuScene.diffIndex].description)
+        difficultyLabel.text = MenuScene.difficulties[MenuScene.diffIndex].tag
+        Preferences.setDifficulty(value: MenuScene.diffIndex)
     }
     
     override func update(_ currentTime: TimeInterval) {
