@@ -10,7 +10,7 @@ import AVFoundation
 
 class AudioController {
     
-    /*let song = AVPlayer(url: Bundle.main.url(forResource: "awesomeness.wav", withExtension: nil)!)
+    let song = AVPlayer(url: Bundle.main.url(forResource: "awesomeness.wav", withExtension: nil)!)
     
     private static let sharedAudioController = AudioController()
     static var shared: AudioController {
@@ -22,5 +22,5 @@ class AudioController {
     }
     func pause() {
         song.pause()
-    }*/
+    }
 }

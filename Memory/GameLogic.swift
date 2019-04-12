@@ -8,6 +8,10 @@
 
 import Foundation
 
+enum CardSelectedResult {
+    case alreadyMatched, flipUp, flipDown, match, failMatch, error
+}
+
 class GameLogic {
     
     var points = 0
@@ -80,13 +84,13 @@ class GameLogic {
         self.consecutiveMatches = 0
     }
     
-    func cardSelected(cardId:Int, flipAnimation: ((Int, CardState, Double) -> Void)?) {
+    func cardSelected(cardId:Int) -> CardSelectedResult {
         
         let card = findCard(id: cardId)
         
-        //1. Está emparejada?
+        //1. Está ya emparejada?
         if card.state == CardState.matched {
-            return
+            return CardSelectedResult.alreadyMatched
         }
         
         //2. está destapada?
@@ -94,53 +98,37 @@ class GameLogic {
             self.selected = nil
             card.state = CardState.covered
             
-            if let flipAnim = flipAnimation {
-                flipAnim(card.id, CardState.covered, 0)
-            }
-            
-            return
+            return CardSelectedResult.flipDown
         }
         
         //3. está tapada?
         if card.state == CardState.covered {
             
-            //Si existe selected intentamos match
+            //Si habia una seleccionada intentamos match
             if let selected = self.selected {
                 
                 //Es match? -> boca arriba
                 if tryMatch(card1: card, card2: selected) {
                     
-                    //Si tenemos animación giramos
-                    if let flipAnim = flipAnimation {
-                        flipAnim(card.id, CardState.uncovered, 0)
-                    }
+                    self.selected = nil
+                    return CardSelectedResult.match
                 }
                 //no es match? tapamos las dos
                 else {
                     
-                    //si tenemos animacion giramos cartas
-                    if let flipAnim = flipAnimation {
-                        //Ponemos la actual boca arriba
-                        flipAnim(card.id, CardState.uncovered, 0)
-                        
-                        //Esperamos y giramos las dos
-                        flipAnim(card.id,CardState.covered,CardSprite.flipTime + CardSprite.waitUntilFlipBack)
-                        flipAnim(selected.id,CardState.covered,CardSprite.flipTime + CardSprite.waitUntilFlipBack)
-                    }
+                    self.selected = nil
+                    return CardSelectedResult.failMatch
                 }
-                
-                self.selected = nil
             }
             //no hay selected? -> esta será el selected
             else {
                 self.selected = card
                 card.state = CardState.uncovered
                 
-                //Si tenemos animación giramos carta
-                if let flipAnim = flipAnimation {
-                    flipAnim(card.id, CardState.uncovered, 0)
-                }
+                return CardSelectedResult.flipUp
             }
         }
+        
+        return CardSelectedResult.error
     }
 }

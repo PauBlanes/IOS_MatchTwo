@@ -8,6 +8,7 @@
 
 import SpriteKit
 import GameplayKit
+import AVFoundation
 
 struct Directions {
     var top:CGFloat
@@ -21,17 +22,17 @@ struct Grid {
 }
 
 class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
-    
+
     weak var sceneControllerDelegate: SceneControllerDelegate?
-    
-    private var label : SKLabelNode?
-    private var spinnyNode : SKShapeNode?
     
     private var cardSprites = [CardSprite]()
     
     private var gameLogic = GameLogic()
     
-    var grid = Grid(rows:4, columns:4)
+    var grid = Grid(rows:0, columns:0)
+    
+    private var label : SKLabelNode?
+    private var spinnyNode : SKShapeNode?
     
     private var backButton = ImageButton(imageNamed: "back_icon")
     private var pointsLabel : SKLabelNode = SKLabelNode(fontNamed: "Verdana")
@@ -47,7 +48,21 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
     let restart = ImageButton(imageNamed: "restart_icon")
     let nextLevel = ImageButton(imageNamed: "next_icon")
     
+    //Music
+    let matchSound = AVPlayer(url: Bundle.main.url(forResource: "correct.wav", withExtension: nil)!)
+    let comboSound = AVPlayer(url: Bundle.main.url(forResource: "combo.mp3", withExtension: nil)!)
+    let incorrectSound = AVPlayer(url: Bundle.main.url(forResource: "incorrect.wav", withExtension: nil)!)
+    let deniedSound = AVPlayer(url: Bundle.main.url(forResource: "denied.wav", withExtension: nil)!)
+    let defeatSound = AVPlayer(url: Bundle.main.url(forResource: "defeat.wav", withExtension: nil)!)
+    let victorySound = AVPlayer(url: Bundle.main.url(forResource: "victory.mp3", withExtension: nil)!)
+    
     override func didMove(to view: SKView) {
+        
+        //Background
+        let background = SKSpriteNode(imageNamed: "bg")
+        background.size = frame.size
+        background.position = CGPoint(x: frame.midX, y: frame.midY)
+        addChild(background)
         
         gameLogic.Start(numPairs: (grid.rows*grid.columns)/2, startingPoints: 0, pointsPerMatch: 10, levelTimerInSeconds: 120)
         spawnCards(view: view, cards : gameLogic.cards)
@@ -158,10 +173,10 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
         }
         
     }
-    func findCardAndFlip(cardId: Int, cardState: CardState, delay: Double) {
+    func findCardAndFlip(cardId: Int, to cardState: CardState) {
         for sprite in self.cardSprites {
             if sprite.id == cardId{
-                sprite.flip(to: cardState, withDelay: delay)
+                sprite.flip(to: cardState)
             }
         }
     }
@@ -171,7 +186,63 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
         
         if !matchEnded {
             
-            gameLogic.cardSelected(cardId: card.id, flipAnimation: findCardAndFlip)
+            //1. coger el selected por si es match, pq sino ya estará a nil al terminar el gamelogic de comprobar
+            var selectedId:Int?
+            if let selected = gameLogic.selected {
+                selectedId = selected.id
+            }
+            
+            //2. Cojer el resultado
+            let result = gameLogic.cardSelected(cardId: card.id)
+            
+            //3. Hacer animación
+            switch (result) {
+                
+                case CardSelectedResult.alreadyMatched:
+                    deniedSound.seek(to: CMTime.zero)
+                    deniedSound.play()
+                
+                case CardSelectedResult.flipDown:
+                    card.flip(to: CardState.covered)
+                
+                case CardSelectedResult.flipUp:
+                    card.flip(to: CardState.uncovered)
+                
+                case CardSelectedResult.match:
+                    card.flip(to: CardState.uncovered)
+                    
+                    self.run(SKAction.sequence([
+                        SKAction.wait(forDuration: CardSprite.flipTime),
+                        SKAction.run{
+                            self.matchSound.seek(to: CMTime.zero)
+                            self.matchSound.play()
+                        }]))
+                
+                case CardSelectedResult.failMatch:
+                    
+                    //1. Ponemos la actual boca arriba
+                    card.flip(to:  CardState.uncovered)
+                    
+                    //2.Esperamos y giramos las dos
+                    self.run(SKAction.sequence([
+                        SKAction.wait(forDuration: CardSprite.flipTime + CardSprite.waitUntilFlipBack),
+                        SKAction.run{
+                            //sonido fail
+                            self.incorrectSound.seek(to: CMTime.zero)
+                            self.incorrectSound.play()
+                            
+                            //volver a girar
+                            card.flip(to: CardState.covered)
+                            if let id = selectedId {
+                                self.findCardAndFlip(cardId: id, to: CardState.covered)
+                            }
+                        }]))
+                
+                case CardSelectedResult.error:
+                    print("Something went wrong : Card is not match, covered or uncovered")
+            }
+            
+            //Actualizar HUD
             updateUI()
         }
     }
@@ -210,6 +281,8 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
         }
         else if gameLogic.consecutiveMatches > numCombos, gameLogic.consecutiveMatches > 1 {
             comboLabel.text = "COMBO \n X\(gameLogic.consecutiveMatches)"
+            comboSound.seek(to: CMTime.zero)
+            comboSound.play()
             comboLabel.run(SKAction.sequence([
                 SKAction.fadeIn(withDuration: 0.5),
                 SKAction.wait(forDuration: 1),
@@ -262,7 +335,8 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
             scoreLabel.run(fadeInAction)
             bgLabel.addChild(scoreLabel)
             
-            if (won) {
+            if won {
+                
                 let timeLabel = SKLabelNode(fontNamed: "Verdana")
                 timeLabel.text = "Time left: \(Int(self.gameLogic.levelTimerValue/60)):\(self.gameLogic.levelTimerValue%60)"
                 timeLabel.fontSize = 35
@@ -270,8 +344,18 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
                 timeLabel.alpha = 0
                 timeLabel.run(fadeInAction)
                 bgLabel.addChild(timeLabel)
+                
+                winTextLabel.text = "YOU WIN!"
+                victorySound.seek(to: CMTime.zero)
+                victorySound.play()
+                
+            } else {
+                winTextLabel.text = "YOU LOSE..."
+                defeatSound.seek(to: CMTime.zero)
+                defeatSound.play()
+                
+                bgLabel.run(SKAction.resize(toWidth: view.frame.height*0.25, duration: 0))
             }
-            
             
             //Botones
             toMenu.position = CGPoint(x: -bgLabel.frame.width*0.3, y: -bgLabel.frame.height*0.4)
@@ -304,14 +388,7 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
                 bgLabel.addChild(nextLevel)
             }
             
-            if won {
-                winTextLabel.text = "YOU WIN!"
-                
-            } else {
-                winTextLabel.text = "YOU LOSE..."
-                
-                bgLabel.run(SKAction.resize(toWidth: view.frame.height*0.25, duration: 0))
-            }
+            
             
             
             

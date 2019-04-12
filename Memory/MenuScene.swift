@@ -37,16 +37,19 @@ class MenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
         Difficulty(tag: "HARD",description: "15 Diferent Pairs!" , grid: Grid(rows: 6, columns: 5))
     ]
     
-    //var swipeRightGesture = UISwipeGestureRecognizer()
-    
-    //Musica
-    
+    var swipeRightGesture = UISwipeGestureRecognizer()
+    var swipeLeftGesture = UISwipeGestureRecognizer()
     
     override func didMove(to view: SKView) {
         
         //Background
-        self.backgroundColor = UIColor(red: 1, green: 0.5, blue: 0.5, alpha: 1)
-        //AudioController.shared.play()
+        let background = SKSpriteNode(imageNamed: "bg")
+        background.size = frame.size
+        background.position = CGPoint(x: frame.midX, y: frame.midY)
+        addChild(background)
+        
+        //Music
+        AudioController.shared.play()
         
         //Set the butons
         rankingsButton.position = CGPoint(x: view.frame.width/2, y: view.frame.height * 0.15)
@@ -103,20 +106,28 @@ class MenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
                 ])))
         
         //SWIPE
-        /*swipeRightGesture =
+        swipeRightGesture =
          UISwipeGestureRecognizer(target: self,
          action: #selector(swipeRight(sender:)))
          swipeRightGesture.direction = .right
-         view.addGestureRecognizer(swipeRightGesture)*/
+         view.addGestureRecognizer(swipeRightGesture)
+        swipeLeftGesture =
+            UISwipeGestureRecognizer(target: self,
+                                     action: #selector(swipeLeft(sender:)))
+        swipeLeftGesture.direction = .left
+        view.addGestureRecognizer(swipeLeftGesture)
     }
     
-    /*@objc func swipeRight(sender: UISwipeGestureRecognizer){
-     print ("swipe detection")
+    @objc func swipeRight(sender: UISwipeGestureRecognizer){
+        onTap(sender: leftArrowButton)
      }
+    @objc func swipeLeft(sender: UISwipeGestureRecognizer){
+        onTap(sender: rightArrowButton)
+    }
      
      override func willMove(from view: SKView) {
      view.removeGestureRecognizer(swipeRightGesture)
-     }*/
+     }
     
     func onTap(sender: Button) {
         if sender == difficultyButton {

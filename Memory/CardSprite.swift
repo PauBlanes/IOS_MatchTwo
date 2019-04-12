@@ -7,6 +7,7 @@
 //
 
 import SpriteKit
+import AVFoundation
 
 protocol CardSpriteDelegate: class {
     func onTap(card: CardSprite)
@@ -23,6 +24,9 @@ class CardSprite: SKSpriteNode {
     
     var id = -1
     
+    //sounds
+    let flipSound = AVPlayer(url: Bundle.main.url(forResource: "card_flip.wav", withExtension: nil)!)
+    
     var frontTexture: SKTexture = SKTexture()
     
     func setCard (newSize:CGSize, position: CGPoint) {
@@ -36,7 +40,7 @@ class CardSprite: SKSpriteNode {
         self.anchorPoint = CGPoint(x:0.5,y: 0.5)
     }
     
-    func flip (to cardState:CardState, withDelay:Double){
+    func flip (to cardState:CardState){
         
         //1. No dejo que el user interactue mientras está girando
         isUserInteractionEnabled = false
@@ -50,9 +54,12 @@ class CardSprite: SKSpriteNode {
             newTexture = CardSprite.backTexture
         }
         
-        //3. animación i al terrminarla vuelvo a activar interacción
+        //3. Sonido
+        self.flipSound.seek(to: CMTime.zero)
+        self.flipSound.play()
+        
+        //4. animación i al terminarla vuelvo a activar interacción
         self.run(SKAction.sequence([
-            SKAction.wait(forDuration: withDelay),
             SKAction.scaleX(to: 0, duration: CardSprite.flipTime/2),
             SKAction.setTexture(newTexture),
             SKAction.scaleX(to: 1, duration: CardSprite.flipTime/2),
