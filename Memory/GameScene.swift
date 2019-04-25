@@ -58,6 +58,13 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
     
     override func didMove(to view: SKView) {
         
+        //Firebase
+        let fireStoreRepository = FirestoreRepository()
+        let userID = "6D70814C-511B-43A5-8642-9301DBB55797"//UUID().uuidString //guardar en local
+        fireStoreRepository.writeUserScore(score: 10, username: "Alex", userId: userID)
+        fireStoreRepository.getUserScore()
+        
+        
         //Background
         let background = SKSpriteNode(imageNamed: "bg")
         background.size = frame.size
