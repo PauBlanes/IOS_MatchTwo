@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E0567542271DD0C00C0E136 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1E0567532271DD0C00C0E136 /* GoogleService-Info.plist */; };
+		1E0567642271DE4200C0E136 /* awesomeness.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1E05675B2271DE4200C0E136 /* awesomeness.wav */; };
+		1E0567652271DE4200C0E136 /* denied.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1E05675C2271DE4200C0E136 /* denied.wav */; };
+		1E0567662271DE4200C0E136 /* incorrect.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1E05675D2271DE4200C0E136 /* incorrect.wav */; };
+		1E0567672271DE4200C0E136 /* victory.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1E05675E2271DE4200C0E136 /* victory.mp3 */; };
+		1E0567682271DE4200C0E136 /* incorrect.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 1E05675F2271DE4200C0E136 /* incorrect.aiff */; };
+		1E0567692271DE4200C0E136 /* card_flip.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1E0567602271DE4200C0E136 /* card_flip.wav */; };
+		1E05676A2271DE4200C0E136 /* defeat.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1E0567612271DE4200C0E136 /* defeat.wav */; };
+		1E05676B2271DE4200C0E136 /* correct.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1E0567622271DE4200C0E136 /* correct.wav */; };
+		1E05676C2271DE4200C0E136 /* combo.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1E0567632271DE4200C0E136 /* combo.mp3 */; };
 		1E16FC752237E10300132EB3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E16FC742237E10300132EB3 /* AppDelegate.swift */; };
 		1E16FC772237E10300132EB3 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1E16FC762237E10300132EB3 /* GameScene.sks */; };
 		1E16FC792237E10300132EB3 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 1E16FC782237E10300132EB3 /* Actions.sks */; };
@@ -23,19 +33,23 @@
 		1E32A1772243C631000AADAA /* GameLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E32A1762243C631000AADAA /* GameLogic.swift */; };
 		1E32A1792243C707000AADAA /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E32A1782243C707000AADAA /* Card.swift */; };
 		1E4B1BE3224E547000500F86 /* preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4B1BE2224E547000500F86 /* preferences.swift */; };
-		1EC5A5382260B33000BCC38F /* awesomeness.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1EC5A5372260B33000BCC38F /* awesomeness.wav */; };
-		1EC5A53A2260B54B00BCC38F /* card_flip.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1EC5A5392260B54B00BCC38F /* card_flip.wav */; };
-		1EC5A53C2260B92B00BCC38F /* correct.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1EC5A53B2260B92B00BCC38F /* correct.wav */; };
-		1EC5A53E2260C90E00BCC38F /* incorrect.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1EC5A53D2260C90E00BCC38F /* incorrect.wav */; };
-		1EC5A5402260CAE000BCC38F /* combo.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1EC5A53F2260CAE000BCC38F /* combo.mp3 */; };
-		1EC5A5422260CB9600BCC38F /* denied.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1EC5A5412260CB9600BCC38F /* denied.wav */; };
-		1EC5A5442260CC5000BCC38F /* victory.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1EC5A5432260CC5000BCC38F /* victory.mp3 */; };
-		1EC5A5462260CC7400BCC38F /* defeat.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1EC5A5452260CC7400BCC38F /* defeat.wav */; };
 		1EDF2946223A8E1900B4F56A /* SettingsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EDF2945223A8E1900B4F56A /* SettingsScene.swift */; };
 		1EDF2948223A9B1E00B4F56A /* CardSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EDF2947223A9B1E00B4F56A /* CardSprite.swift */; };
+		3E6DE717C6C5A601CFC60068 /* Pods_Memory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CFA092481931CF9C21990FB /* Pods_Memory.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		14D9104518B2D8F555E2BE53 /* Pods-Memory.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Memory.release.xcconfig"; path = "Target Support Files/Pods-Memory/Pods-Memory.release.xcconfig"; sourceTree = "<group>"; };
+		1E0567532271DD0C00C0E136 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		1E05675B2271DE4200C0E136 /* awesomeness.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = awesomeness.wav; path = ../../../../../Downloads/awesomeness.wav; sourceTree = "<group>"; };
+		1E05675C2271DE4200C0E136 /* denied.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = denied.wav; path = ../../../../../Downloads/denied.wav; sourceTree = "<group>"; };
+		1E05675D2271DE4200C0E136 /* incorrect.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = incorrect.wav; path = ../../../../../Downloads/incorrect.wav; sourceTree = "<group>"; };
+		1E05675E2271DE4200C0E136 /* victory.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = victory.mp3; path = ../../../../../Downloads/victory.mp3; sourceTree = "<group>"; };
+		1E05675F2271DE4200C0E136 /* incorrect.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; name = incorrect.aiff; path = ../../../../../Downloads/incorrect.aiff; sourceTree = "<group>"; };
+		1E0567602271DE4200C0E136 /* card_flip.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = card_flip.wav; path = ../../../../../Downloads/card_flip.wav; sourceTree = "<group>"; };
+		1E0567612271DE4200C0E136 /* defeat.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = defeat.wav; path = ../../../../../Downloads/defeat.wav; sourceTree = "<group>"; };
+		1E0567622271DE4200C0E136 /* correct.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = correct.wav; path = ../../../../../Downloads/correct.wav; sourceTree = "<group>"; };
+		1E0567632271DE4200C0E136 /* combo.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = combo.mp3; path = ../../../../../Downloads/combo.mp3; sourceTree = "<group>"; };
 		1E16FC712237E10300132EB3 /* Memory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Memory.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E16FC742237E10300132EB3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1E16FC762237E10300132EB3 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -54,16 +68,10 @@
 		1E32A1762243C631000AADAA /* GameLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameLogic.swift; sourceTree = "<group>"; };
 		1E32A1782243C707000AADAA /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		1E4B1BE2224E547000500F86 /* preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = preferences.swift; sourceTree = "<group>"; };
-		1EC5A5372260B33000BCC38F /* awesomeness.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = awesomeness.wav; sourceTree = "<group>"; };
-		1EC5A5392260B54B00BCC38F /* card_flip.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = card_flip.wav; sourceTree = "<group>"; };
-		1EC5A53B2260B92B00BCC38F /* correct.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = correct.wav; sourceTree = "<group>"; };
-		1EC5A53D2260C90E00BCC38F /* incorrect.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = incorrect.wav; path = ../../../../../Downloads/incorrect.wav; sourceTree = "<group>"; };
-		1EC5A53F2260CAE000BCC38F /* combo.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = combo.mp3; path = ../../../../../Downloads/combo.mp3; sourceTree = "<group>"; };
-		1EC5A5412260CB9600BCC38F /* denied.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = denied.wav; path = ../../../../../Downloads/denied.wav; sourceTree = "<group>"; };
-		1EC5A5432260CC5000BCC38F /* victory.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = victory.mp3; path = ../../../../../Downloads/victory.mp3; sourceTree = "<group>"; };
-		1EC5A5452260CC7400BCC38F /* defeat.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = defeat.wav; path = ../../../../../Downloads/defeat.wav; sourceTree = "<group>"; };
 		1EDF2945223A8E1900B4F56A /* SettingsScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScene.swift; sourceTree = "<group>"; };
 		1EDF2947223A9B1E00B4F56A /* CardSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSprite.swift; sourceTree = "<group>"; };
+		3CFA092481931CF9C21990FB /* Pods_Memory.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Memory.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CCB368E5C35D4589DB7BA266 /* Pods-Memory.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Memory.debug.xcconfig"; path = "Target Support Files/Pods-Memory/Pods-Memory.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,17 +79,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E6DE717C6C5A601CFC60068 /* Pods_Memory.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		169D0F4D9D378621A5D3F65C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3CFA092481931CF9C21990FB /* Pods_Memory.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		1E16FC682237E10300132EB3 = {
 			isa = PBXGroup;
 			children = (
 				1E16FC732237E10300132EB3 /* Memory */,
 				1E16FC722237E10300132EB3 /* Products */,
+				91BDD620231C41CCA1571619 /* Pods */,
+				169D0F4D9D378621A5D3F65C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -110,6 +129,7 @@
 				1E16FC7A2237E10300132EB3 /* GameScene.swift */,
 				1E16FC8E2237E21100132EB3 /* MenuScene.swift */,
 				1EDF2945223A8E1900B4F56A /* SettingsScene.swift */,
+				1E0567532271DD0C00C0E136 /* GoogleService-Info.plist */,
 				1EDF2947223A9B1E00B4F56A /* CardSprite.swift */,
 				1E32A1762243C631000AADAA /* GameLogic.swift */,
 				1E32A1782243C707000AADAA /* Card.swift */,
@@ -123,16 +143,26 @@
 		1EC5A5362260B33000BCC38F /* Music */ = {
 			isa = PBXGroup;
 			children = (
-				1EC5A5452260CC7400BCC38F /* defeat.wav */,
-				1EC5A5432260CC5000BCC38F /* victory.mp3 */,
-				1EC5A5412260CB9600BCC38F /* denied.wav */,
-				1EC5A53F2260CAE000BCC38F /* combo.mp3 */,
-				1EC5A53D2260C90E00BCC38F /* incorrect.wav */,
-				1EC5A53B2260B92B00BCC38F /* correct.wav */,
-				1EC5A5392260B54B00BCC38F /* card_flip.wav */,
-				1EC5A5372260B33000BCC38F /* awesomeness.wav */,
+				1E05675B2271DE4200C0E136 /* awesomeness.wav */,
+				1E0567602271DE4200C0E136 /* card_flip.wav */,
+				1E0567632271DE4200C0E136 /* combo.mp3 */,
+				1E0567622271DE4200C0E136 /* correct.wav */,
+				1E0567612271DE4200C0E136 /* defeat.wav */,
+				1E05675C2271DE4200C0E136 /* denied.wav */,
+				1E05675F2271DE4200C0E136 /* incorrect.aiff */,
+				1E05675D2271DE4200C0E136 /* incorrect.wav */,
+				1E05675E2271DE4200C0E136 /* victory.mp3 */,
 			);
 			path = Music;
+			sourceTree = "<group>";
+		};
+		91BDD620231C41CCA1571619 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				CCB368E5C35D4589DB7BA266 /* Pods-Memory.debug.xcconfig */,
+				14D9104518B2D8F555E2BE53 /* Pods-Memory.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -142,9 +172,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1E16FC892237E10500132EB3 /* Build configuration list for PBXNativeTarget "Memory" */;
 			buildPhases = (
+				C7BBEBF23899937D43DF0047 /* [CP] Check Pods Manifest.lock */,
 				1E16FC6D2237E10300132EB3 /* Sources */,
 				1E16FC6E2237E10300132EB3 /* Frameworks */,
 				1E16FC6F2237E10300132EB3 /* Resources */,
+				8A1AA18777656995966D8D79 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -193,23 +225,74 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1E0567682271DE4200C0E136 /* incorrect.aiff in Resources */,
 				1E16FC802237E10300132EB3 /* Main.storyboard in Resources */,
-				1EC5A53C2260B92B00BCC38F /* correct.wav in Resources */,
 				1E16FC772237E10300132EB3 /* GameScene.sks in Resources */,
-				1EC5A5402260CAE000BCC38F /* combo.mp3 in Resources */,
+				1E05676C2271DE4200C0E136 /* combo.mp3 in Resources */,
 				1E16FC822237E10400132EB3 /* Assets.xcassets in Resources */,
-				1EC5A5442260CC5000BCC38F /* victory.mp3 in Resources */,
-				1EC5A53E2260C90E00BCC38F /* incorrect.wav in Resources */,
-				1EC5A5382260B33000BCC38F /* awesomeness.wav in Resources */,
 				1E16FC852237E10400132EB3 /* LaunchScreen.storyboard in Resources */,
-				1EC5A53A2260B54B00BCC38F /* card_flip.wav in Resources */,
-				1EC5A5462260CC7400BCC38F /* defeat.wav in Resources */,
+				1E0567692271DE4200C0E136 /* card_flip.wav in Resources */,
+				1E0567662271DE4200C0E136 /* incorrect.wav in Resources */,
+				1E0567672271DE4200C0E136 /* victory.mp3 in Resources */,
+				1E0567642271DE4200C0E136 /* awesomeness.wav in Resources */,
 				1E16FC792237E10300132EB3 /* Actions.sks in Resources */,
-				1EC5A5422260CB9600BCC38F /* denied.wav in Resources */,
+				1E05676A2271DE4200C0E136 /* defeat.wav in Resources */,
+				1E05676B2271DE4200C0E136 /* correct.wav in Resources */,
+				1E0567542271DD0C00C0E136 /* GoogleService-Info.plist in Resources */,
+				1E0567652271DE4200C0E136 /* denied.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		8A1AA18777656995966D8D79 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Memory/Pods-Memory-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Memory/Pods-Memory-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C7BBEBF23899937D43DF0047 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Memory-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1E16FC6D2237E10300132EB3 /* Sources */ = {
@@ -372,6 +455,7 @@
 		};
 		1E16FC8A2237E10500132EB3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CCB368E5C35D4589DB7BA266 /* Pods-Memory.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -389,6 +473,7 @@
 		};
 		1E16FC8B2237E10500132EB3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 14D9104518B2D8F555E2BE53 /* Pods-Memory.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
