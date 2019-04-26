@@ -9,6 +9,7 @@
 import SpriteKit
 import GameplayKit
 import AVFoundation
+import FirebaseAnalytics
 
 struct Directions {
     var top:CGFloat
@@ -421,5 +422,9 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
                 endMatch(won: true)
             }
         }
+    }
+    
+    func goToLevel(level: Int) {
+        Analytics.logEvent("nextLevel", parameters: ["levelname": level])
     }
 }
