@@ -12,7 +12,7 @@ import GameplayKit
 protocol SceneControllerDelegate: class {
     func goToGame(sender: SKScene, grid:Grid)
     func goToSettings(sender: MenuScene)
-    func goToMenu (sender: SKScene)
+    func goToMenu (sender: SKScene?)
 }
 
 class MenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
