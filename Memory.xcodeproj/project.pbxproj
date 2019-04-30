@@ -37,7 +37,6 @@
 		1EDF2946223A8E1900B4F56A /* SettingsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EDF2945223A8E1900B4F56A /* SettingsScene.swift */; };
 		1EDF2948223A9B1E00B4F56A /* CardSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EDF2947223A9B1E00B4F56A /* CardSprite.swift */; };
 		1EFBBF4122772844005B3728 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EFBBF4022772844005B3728 /* FirebaseManager.swift */; };
-		1EFBBF4322773247005B3728 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EFBBF4222773247005B3728 /* User.swift */; };
 		3E6DE717C6C5A601CFC60068 /* Pods_Memory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CFA092481931CF9C21990FB /* Pods_Memory.framework */; };
 /* End PBXBuildFile section */
 
@@ -75,7 +74,6 @@
 		1EDF2945223A8E1900B4F56A /* SettingsScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScene.swift; sourceTree = "<group>"; };
 		1EDF2947223A9B1E00B4F56A /* CardSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSprite.swift; sourceTree = "<group>"; };
 		1EFBBF4022772844005B3728 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
-		1EFBBF4222773247005B3728 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		3CFA092481931CF9C21990FB /* Pods_Memory.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Memory.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCB368E5C35D4589DB7BA266 /* Pods-Memory.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Memory.debug.xcconfig"; path = "Target Support Files/Pods-Memory/Pods-Memory.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -144,7 +142,6 @@
 				1E222145225F73900061F0B2 /* AudioController.swift */,
 				1E05676D2271E17900C0E136 /* FirestoreRepository.swift */,
 				1EFBBF4022772844005B3728 /* FirebaseManager.swift */,
-				1EFBBF4222773247005B3728 /* User.swift */,
 			);
 			path = Memory;
 			sourceTree = "<group>";
@@ -353,7 +350,6 @@
 				1E16FC7D2237E10300132EB3 /* GameViewController.swift in Sources */,
 				1E222144225F69DC0061F0B2 /* Difficulty.swift in Sources */,
 				1EDF2946223A8E1900B4F56A /* SettingsScene.swift in Sources */,
-				1EFBBF4322773247005B3728 /* User.swift in Sources */,
 				1E32A1772243C631000AADAA /* GameLogic.swift in Sources */,
 				1E05676E2271E17900C0E136 /* FirestoreRepository.swift in Sources */,
 				1E16FC8F2237E21100132EB3 /* MenuScene.swift in Sources */,

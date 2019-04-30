@@ -76,19 +76,24 @@ class GameViewController: UIViewController, SceneControllerDelegate/*, GADBanner
         return true
     }
     
-    func goToMenu(sender: SKScene?){
+    func usernamePopup() {
         
+        //1. Mostrar popup
         let ac = UIAlertController(title: "Enter Username", message: nil, preferredStyle: .alert)
         ac.addTextField(configurationHandler: nil)
         
         ac.addAction(UIAlertAction(title: "OK", style: .default) { [unowned ac] _ in
             let playerName = ac.textFields![0]
-            var user = User(FirebaseManager.instance.getUserId(), playerName.text ?? "Anonymus")
-            FirebaseManager.instance.createUser(user)
+            FirebaseManager.instance.createUser(username: playerName.text ?? "Anonymous")
         })
         
         self.present(ac, animated: true, completion: nil)
         
+    }
+    
+    func goToMenu(sender: SKScene?){
+        FirebaseManager.instance.updateHighscore(score: 5)
+        //2. LOAD MENU
         if let view = self.view as? SKView {
             let scene = MenuScene(size: view.frame.size)
             scene.sceneControllerDelegate = self

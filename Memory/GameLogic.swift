@@ -131,4 +131,11 @@ class GameLogic {
         
         return CardSelectedResult.error
     }
+    
+    func didWin() -> Bool {
+        return pairsMatched >= cards.count/2
+    }
+    func didLose() -> Bool {
+        return levelTimerValue <= 0
+    }
 }

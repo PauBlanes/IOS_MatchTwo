@@ -345,6 +345,7 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
             
             if won {
                 
+                //Labels
                 let timeLabel = SKLabelNode(fontNamed: "Verdana")
                 timeLabel.text = "Time left: \(Int(self.gameLogic.levelTimerValue/60)):\(self.gameLogic.levelTimerValue%60)"
                 timeLabel.fontSize = 35
@@ -356,6 +357,9 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
                 winTextLabel.text = "YOU WIN!"
                 victorySound.seek(to: CMTime.zero)
                 victorySound.play()
+                
+                //Firebase
+                FirebaseManager.instance.updateHighscore(score: gameLogic.points)
                 
             } else {
                 winTextLabel.text = "YOU LOSE..."
@@ -395,17 +399,6 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
                 nextLevel.run(fadeInAction)
                 bgLabel.addChild(nextLevel)
             }
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
         }
         
     }
@@ -413,12 +406,12 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
     // Called before each frame is rendered
     override func update(_ currentTime: TimeInterval) {
         
-        //WIN?
-        if !matchEnded {
-            if gameLogic.levelTimerValue <= 0 {
+        //WIN CONDITIONS
+        if !matchEnded { //para o continuar entrando una vez ya se ha entrado
+            if gameLogic.didLose() {
                 endMatch(won: false)
             }
-            else if gameLogic.pairsMatched >= ((grid.rows*grid.columns)/2) {
+            else if gameLogic.didWin() {
                 endMatch(won: true)
             }
         }
