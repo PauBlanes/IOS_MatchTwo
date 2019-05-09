@@ -57,14 +57,7 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
     let defeatSound = AVPlayer(url: Bundle.main.url(forResource: "defeat.wav", withExtension: nil)!)
     let victorySound = AVPlayer(url: Bundle.main.url(forResource: "victory.mp3", withExtension: nil)!)
     
-    override func didMove(to view: SKView) {
-        
-        //Firebase
-        let fireStoreRepository = FirestoreRepository()
-        let userID = "6D70814C-511B-43A5-8642-9301DBB55797"//UUID().uuidString //guardar en local
-        fireStoreRepository.writeUserScore(score: 10, username: "Alex", userId: userID)
-        fireStoreRepository.getUserScore()
-        
+    override func didMove(to view: SKView) {        
         
         //Background
         let background = SKSpriteNode(imageNamed: "bg")

@@ -1,0 +1,10 @@
+/* 
+  Localizable.strings
+  Memory
+
+  Created by Pau Blanes on 9/5/19.
+  Copyright © 2019 Pau Blanes. All rights reserved.
+*/
+
+"Hello_dialog_title" = "Hello";
+"Hello_dialog_msg" = "Congratulations! You found our ofice";

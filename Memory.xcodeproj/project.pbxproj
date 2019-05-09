@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1E0567542271DD0C00C0E136 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1E0567532271DD0C00C0E136 /* GoogleService-Info.plist */; };
-		1E05676E2271E17900C0E136 /* FirestoreRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E05676D2271E17900C0E136 /* FirestoreRepository.swift */; };
 		1E0567782271F12000C0E136 /* awesomeness.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1E05676F2271F11A00C0E136 /* awesomeness.wav */; };
 		1E0567792271F12000C0E136 /* denied.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1E0567702271F11B00C0E136 /* denied.wav */; };
 		1E05677A2271F12000C0E136 /* incorrect.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1E0567712271F11B00C0E136 /* incorrect.wav */; };
@@ -36,6 +35,8 @@
 		1E4B1BE3224E547000500F86 /* preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4B1BE2224E547000500F86 /* preferences.swift */; };
 		1EDF2946223A8E1900B4F56A /* SettingsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EDF2945223A8E1900B4F56A /* SettingsScene.swift */; };
 		1EDF2948223A9B1E00B4F56A /* CardSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EDF2947223A9B1E00B4F56A /* CardSprite.swift */; };
+		1EF748EE22845AA40021CD3A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1EF748F022845AA40021CD3A /* Localizable.strings */; };
+		1EF748F522845CD10021CD3A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1EF748F722845CD10021CD3A /* InfoPlist.strings */; };
 		1EFBBF4122772844005B3728 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EFBBF4022772844005B3728 /* FirebaseManager.swift */; };
 		3E6DE717C6C5A601CFC60068 /* Pods_Memory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CFA092481931CF9C21990FB /* Pods_Memory.framework */; };
 /* End PBXBuildFile section */
@@ -43,7 +44,6 @@
 /* Begin PBXFileReference section */
 		14D9104518B2D8F555E2BE53 /* Pods-Memory.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Memory.release.xcconfig"; path = "Target Support Files/Pods-Memory/Pods-Memory.release.xcconfig"; sourceTree = "<group>"; };
 		1E0567532271DD0C00C0E136 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
-		1E05676D2271E17900C0E136 /* FirestoreRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreRepository.swift; sourceTree = "<group>"; };
 		1E05676F2271F11A00C0E136 /* awesomeness.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = awesomeness.wav; sourceTree = "<group>"; };
 		1E0567702271F11B00C0E136 /* denied.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = denied.wav; sourceTree = "<group>"; };
 		1E0567712271F11B00C0E136 /* incorrect.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = incorrect.wav; sourceTree = "<group>"; };
@@ -73,6 +73,16 @@
 		1E4B1BE2224E547000500F86 /* preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = preferences.swift; sourceTree = "<group>"; };
 		1EDF2945223A8E1900B4F56A /* SettingsScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScene.swift; sourceTree = "<group>"; };
 		1EDF2947223A9B1E00B4F56A /* CardSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSprite.swift; sourceTree = "<group>"; };
+		1EF748E8228457620021CD3A /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
+		1EF748E9228457630021CD3A /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		1EF748EA228457710021CD3A /* ca */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ca; path = ca.lproj/Main.strings; sourceTree = "<group>"; };
+		1EF748EB228457710021CD3A /* ca */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ca; path = ca.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		1EF748EF22845AA40021CD3A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1EF748F122845AAD0021CD3A /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1EF748F222845AB60021CD3A /* ca */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ca; path = ca.lproj/Localizable.strings; sourceTree = "<group>"; };
+		1EF748F622845CD10021CD3A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1EF748F822845CD30021CD3A /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1EF748F922845CD70021CD3A /* ca */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ca; path = ca.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1EFBBF4022772844005B3728 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		3CFA092481931CF9C21990FB /* Pods_Memory.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Memory.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCB368E5C35D4589DB7BA266 /* Pods-Memory.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Memory.debug.xcconfig"; path = "Target Support Files/Pods-Memory/Pods-Memory.debug.xcconfig"; sourceTree = "<group>"; };
@@ -126,22 +136,23 @@
 				1E16FC7E2237E10300132EB3 /* Main.storyboard */,
 				1E16FC812237E10400132EB3 /* Assets.xcassets */,
 				1E16FC832237E10400132EB3 /* LaunchScreen.storyboard */,
-				1E16FC862237E10400132EB3 /* Info.plist */,
 				1E16FC8C2237E16C00132EB3 /* Button.swift */,
 				1E16FC902237E94600132EB3 /* ImageButton.swift */,
 				1E16FC7C2237E10300132EB3 /* GameViewController.swift */,
 				1E16FC7A2237E10300132EB3 /* GameScene.swift */,
 				1E16FC8E2237E21100132EB3 /* MenuScene.swift */,
 				1EDF2945223A8E1900B4F56A /* SettingsScene.swift */,
-				1E0567532271DD0C00C0E136 /* GoogleService-Info.plist */,
 				1EDF2947223A9B1E00B4F56A /* CardSprite.swift */,
 				1E32A1762243C631000AADAA /* GameLogic.swift */,
 				1E32A1782243C707000AADAA /* Card.swift */,
 				1E4B1BE2224E547000500F86 /* preferences.swift */,
 				1E222143225F69DC0061F0B2 /* Difficulty.swift */,
 				1E222145225F73900061F0B2 /* AudioController.swift */,
-				1E05676D2271E17900C0E136 /* FirestoreRepository.swift */,
 				1EFBBF4022772844005B3728 /* FirebaseManager.swift */,
+				1E0567532271DD0C00C0E136 /* GoogleService-Info.plist */,
+				1E16FC862237E10400132EB3 /* Info.plist */,
+				1EF748F022845AA40021CD3A /* Localizable.strings */,
+				1EF748F722845CD10021CD3A /* InfoPlist.strings */,
 			);
 			path = Memory;
 			sourceTree = "<group>";
@@ -216,6 +227,8 @@
 			knownRegions = (
 				en,
 				Base,
+				es,
+				ca,
 			);
 			mainGroup = 1E16FC682237E10300132EB3;
 			productRefGroup = 1E16FC722237E10300132EB3 /* Products */;
@@ -237,6 +250,7 @@
 				1E16FC772237E10300132EB3 /* GameScene.sks in Resources */,
 				1E0567802271F12000C0E136 /* combo.mp3 in Resources */,
 				1E16FC822237E10400132EB3 /* Assets.xcassets in Resources */,
+				1EF748F522845CD10021CD3A /* InfoPlist.strings in Resources */,
 				1E16FC852237E10400132EB3 /* LaunchScreen.storyboard in Resources */,
 				1E05677D2271F12000C0E136 /* card_flip.wav in Resources */,
 				1E05677A2271F12000C0E136 /* incorrect.wav in Resources */,
@@ -245,6 +259,7 @@
 				1E16FC792237E10300132EB3 /* Actions.sks in Resources */,
 				1E05677E2271F12000C0E136 /* defeat.wav in Resources */,
 				1E05677F2271F12000C0E136 /* correct.wav in Resources */,
+				1EF748EE22845AA40021CD3A /* Localizable.strings in Resources */,
 				1E0567542271DD0C00C0E136 /* GoogleService-Info.plist in Resources */,
 				1E0567792271F12000C0E136 /* denied.wav in Resources */,
 			);
@@ -351,7 +366,6 @@
 				1E222144225F69DC0061F0B2 /* Difficulty.swift in Sources */,
 				1EDF2946223A8E1900B4F56A /* SettingsScene.swift in Sources */,
 				1E32A1772243C631000AADAA /* GameLogic.swift in Sources */,
-				1E05676E2271E17900C0E136 /* FirestoreRepository.swift in Sources */,
 				1E16FC8F2237E21100132EB3 /* MenuScene.swift in Sources */,
 				1E16FC752237E10300132EB3 /* AppDelegate.swift in Sources */,
 				1E4B1BE3224E547000500F86 /* preferences.swift in Sources */,
@@ -371,6 +385,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				1E16FC7F2237E10300132EB3 /* Base */,
+				1EF748E8228457620021CD3A /* es */,
+				1EF748EA228457710021CD3A /* ca */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -379,8 +395,30 @@
 			isa = PBXVariantGroup;
 			children = (
 				1E16FC842237E10400132EB3 /* Base */,
+				1EF748E9228457630021CD3A /* es */,
+				1EF748EB228457710021CD3A /* ca */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		1EF748F022845AA40021CD3A /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1EF748EF22845AA40021CD3A /* en */,
+				1EF748F122845AAD0021CD3A /* es */,
+				1EF748F222845AB60021CD3A /* ca */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		1EF748F722845CD10021CD3A /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1EF748F622845CD10021CD3A /* en */,
+				1EF748F822845CD30021CD3A /* es */,
+				1EF748F922845CD70021CD3A /* ca */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -390,6 +428,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -451,6 +490,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

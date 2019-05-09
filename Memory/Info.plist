@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>To give you rewards</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>To give you rewards</string>
 	<key>GADApplicationIdentifier</key>
 	<string>ca-app-pub-8304393808597863~6787973000</string>
 	<key>CFBundleDevelopmentRegion</key>
