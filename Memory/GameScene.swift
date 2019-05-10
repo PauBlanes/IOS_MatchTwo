@@ -352,7 +352,7 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
                 victorySound.play()
                 
                 //Firebase
-                FirebaseManager.instance.updateHighscore(score: gameLogic.points)
+                FirebaseManager.instance.updateScore(score: gameLogic.points)
                 
             } else {
                 winTextLabel.text = "YOU LOSE..."

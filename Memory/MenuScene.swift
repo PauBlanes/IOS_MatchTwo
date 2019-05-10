@@ -42,6 +42,13 @@ class MenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
     
     override func didMove(to view: SKView) {
         
+        FirebaseManager.instance.getTop10Scores() { rList in
+            for persona in rList {
+                print(persona.key)
+                print(persona.value)
+            }
+        }
+        
         //Background
         let background = SKSpriteNode(imageNamed: "bg")
         background.size = frame.size
@@ -116,6 +123,7 @@ class MenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
                                      action: #selector(swipeLeft(sender:)))
         swipeLeftGesture.direction = .left
         view.addGestureRecognizer(swipeLeftGesture)
+        
     }
     
     @objc func swipeRight(sender: UISwipeGestureRecognizer){

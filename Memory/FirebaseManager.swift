@@ -21,9 +21,7 @@ class FirebaseManager {
     let K_ID = "id"
     let K_NICK = "username"
     let K_HIGHSCORE = "highscore"
-    let RANKINGS_PATH = "Rankings/Highscores"
-    let K_SCORES = "scores"
-    let K_USERNAMES = "usernames"
+    let RANKINGS_FOLDER = "Rankings"
     
     private init() {
         
@@ -41,31 +39,37 @@ class FirebaseManager {
                 K_NICK: username,
                 K_HIGHSCORE: 0])
     }
-    func updateHighscore (score: Int) {
+    func updateScore (score: Int) {
         
         var savedHighscore = 0
-        var savedUsername = "Anonymous"
+        var savedUsername = ""
         
         //1. comprobar si hay highscore y recuperarla
         collectionScores.document(getUserId()).getDocument { (document, error) in
             if let document = document, document.exists {
         
+                //Agafo la meva score
                 guard let highscore = (document.get(self.K_HIGHSCORE) as? Int) else {
                    print("Highscore is nil")
                    return
                 }
                 savedHighscore = highscore
                 
+                //Agafo el meu nom d'usuari
                 guard let username = (document.get(self.K_NICK) as? String) else {
                     print("username is nil")
                     return
                 }
                 savedUsername = username
                 
-                //2. Si hemos mejorado la score la subo
+                //2. Solo subimos nuestra mejor score
                 if score > savedHighscore {
-                    self.collectionScores.document(self.getUserId()).updateData([self.K_HIGHSCORE: score])
-                    self.updateRankings(score: score, username: savedUsername)
+                    //Actualizo mi documento
+                    self.collectionScores.document(self.getUserId())
+                        .updateData([self.K_HIGHSCORE: score])
+                    
+                    //Envio a la carpeta de highscore
+                    self.sendScoreToRankings(score: score, username: savedUsername)
                 }
                 
             } else {
@@ -73,24 +77,52 @@ class FirebaseManager {
             }
         }
     }
-    func updateRankings(score: Int, username: String) {
-        let docRef = Firestore.firestore().document(RANKINGS_PATH)
-        docRef.getDocument { (document, error) in
-            if let document = document, document.exists {
-                var scores:[Int] = document.get(self.K_SCORES) as! [Int]
-                var usernames:[String] = document.get(self.K_USERNAMES) as! [String]
+    private func sendScoreToRankings(score: Int, username: String) {
+        //Utilizo id como nombre del documento para permitir solo 1 score por usuario
+        let docRef = Firestore.firestore().collection(RANKINGS_FOLDER).document(getUserId())
+        docRef.setData([
+            K_NICK: username,
+            K_HIGHSCORE: score]) { err in
+                if let err = err {
+                    print("Error writing to file \(err.localizedDescription)")
+                } else {
+                    print("Document successfully written!")
+                }
+        }
+    }
+    
+    func getTop10Scores(completionHadler: @escaping (Dictionary<String, Int>) -> Void) {
+        var ranking = Dictionary<String, Int>()
+        
+        let collectionRef = Firestore.firestore().collection(RANKINGS_FOLDER)
+        collectionRef
+            .order(by: K_HIGHSCORE)
+            .limit(to: 10)
+            .getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err.localizedDescription)")
+            } else {
                 
-                if scores.count == 0 {
-                    scores.insert(score, at: 0)
-                    usernames.insert(username, at: 0)
+                for document in querySnapshot!.documents {
+                    
+                    //Agafo score
+                    guard let score = (document.get(self.K_HIGHSCORE) as? Int) else {
+                        print("Highscore is nil")
+                        return
+                    }
+                    
+                    //Agafo nom d'usuari
+                    guard let username = (document.get(self.K_NICK) as? String) else {
+                        print("username is nil")
+                        return
+                    }
+                    
+                    ranking[username] = score
                 }
                 
-                docRef.updateData([self.K_SCORES: scores])
-                docRef.updateData([self.K_USERNAMES: usernames])
-                
-            } else {
-                print("Document does not exist")
+                completionHadler(ranking)
             }
+            
         }
     }
     
@@ -181,7 +213,7 @@ extension GameViewController: FUIAuthDelegate {
     }
 }
 
-//Remove cancel Button
+//Remove cancel Button from auth view
 extension FUIAuthBaseViewController{
     open override func viewWillAppear(_ animated: Bool) {
         self.navigationItem.leftBarButtonItem = nil

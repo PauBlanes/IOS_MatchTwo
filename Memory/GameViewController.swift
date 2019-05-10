@@ -14,10 +14,12 @@ import FirebaseAuth
 //import GoogleMobileAds
 import FirebaseAnalytics
 import CoreLocation
+import UserNotifications
 
 class GameViewController: UIViewController, SceneControllerDelegate/*, GADBannerViewDelegate*/ {
     
     let locationManager = CLLocationManager()
+    let notificationCenter = UNUserNotificationCenter.current()
     
     /*func adViewWillPresentScreen(_ bannerView: GADBannerView) {
         Analytics.logEvent("bannerClick", parameters: nil)
@@ -37,6 +39,7 @@ class GameViewController: UIViewController, SceneControllerDelegate/*, GADBanner
         bannerView.delegate = self*/
         
         initLocation()
+        initNotifications()
     }
     
     override func viewDidAppear(_ animated: Bool) { //Per evitar error whose method is not in the window hierarchy
@@ -95,8 +98,8 @@ class GameViewController: UIViewController, SceneControllerDelegate/*, GADBanner
     }
     
     func goToMenu(sender: SKScene?){
-        FirebaseManager.instance.updateHighscore(score: 5)
-        //2. LOAD MENU
+        
+        //LOAD MENU
         if let view = self.view as? SKView {
             let scene = MenuScene(size: view.frame.size)
             scene.sceneControllerDelegate = self
@@ -153,8 +156,74 @@ class GameViewController: UIViewController, SceneControllerDelegate/*, GADBanner
             //Demanar permis la primera vegada
             locationManager.requestWhenInUseAuthorization()
         }
+    }
+    
+    func initNotifications() {
+       
+        notificationCenter.requestAuthorization(options: [.alert]) {
+            (isAccepted, error) in
+            if let error = error {
+                print(error.localizedDescription)
+                return
+            }
+            
+            if isAccepted  {
+                //Do nothing
+            }
+        }
+    }
+    
+    func showHello() {
+        
+        notificationCenter.getNotificationSettings(completionHandler: {
+            [weak self] (settings) in //avisem que self pot ser que no existeixi
+            if settings.authorizationStatus == .authorized {
+                //Send notification
+                self?.sendHelloNotification()
+            } else {
+                //Show popup, pro al ser asincrono podria ser que la aplicacio ja s'hagués tancat i petaria
+                self?.showHelloPopup()
+            }
+        })
         
         
+    }
+    
+    func sendHelloNotification() {
+        //ID
+        let id = "Hello Notification"
+        
+        //Content
+        let content = UNMutableNotificationContent()
+        content.title = NSLocalizedString("Hello_dialog_title", comment: "")
+        content.body = NSLocalizedString("Hello_dialog_msg", comment: "")
+        
+        //Trigger : send in X seconds
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+        
+        //Notification request
+        let notificationRequest = UNNotificationRequest(identifier: id, content: content, trigger: trigger)
+        
+        //Send
+        notificationCenter.add(notificationRequest) { error in
+            print("send notification")
+            if let error = error {
+                print(error.localizedDescription)
+            }
+        }
+        
+    }
+    
+    func showHelloPopup() {
+        //Crear popup, El coment del localied string es per donar context per els traductors
+        let dialog = UIAlertController(title: NSLocalizedString("Hello_dialog_title", comment: ""), message: NSLocalizedString("Hello_dialog_msg", comment: ""), preferredStyle: .alert)
+        
+        //Añadir botón
+        let okButton = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+        dialog.addAction(okButton)
+        
+        //Mostrarlo
+        present(dialog, animated: true, completion: nil)
     }
     
 }
@@ -189,17 +258,6 @@ extension GameViewController: CLLocationManagerDelegate {
         }
     }
     
-    func showHello() {
-        //Crear popup, El coment del localied string es per donar context per els traductors
-        let dialog = UIAlertController(title: NSLocalizedString("Hello_dialog_title", comment: ""), message: NSLocalizedString("Hello_dialog_msg", comment: ""), preferredStyle: .alert)
-        
-        //Añadir botón
-        let okButton = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
-        dialog.addAction(okButton)
-        
-        //Mostrarlo
-        present(dialog, animated: true, completion: nil)
-    }
     //Pq no peti si hi ha localitzacio
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         //do nothing
