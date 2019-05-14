@@ -91,12 +91,12 @@ class FirebaseManager {
         }
     }
     
-    func getTop10Scores(completionHadler: @escaping (Dictionary<String, Int>) -> Void) {
-        var ranking = Dictionary<String, Int>()
+    func getTop10Scores(completionHadler: @escaping ([(name: String, score: Int)]) -> Void) {
+        var ranking: [(name: String, score: Int)] = []
         
         let collectionRef = Firestore.firestore().collection(RANKINGS_FOLDER)
         collectionRef
-            .order(by: K_HIGHSCORE)
+            .order(by: K_HIGHSCORE, descending: true)
             .limit(to: 10)
             .getDocuments() { (querySnapshot, err) in
             if let err = err {
@@ -117,7 +117,7 @@ class FirebaseManager {
                         return
                     }
                     
-                    ranking[username] = score
+                    ranking += [(username, score)]
                 }
                 
                 completionHadler(ranking)

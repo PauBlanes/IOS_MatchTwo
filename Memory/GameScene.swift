@@ -65,7 +65,13 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
         background.position = CGPoint(x: frame.midX, y: frame.midY)
         addChild(background)
         
-        gameLogic.Start(numPairs: (grid.rows*grid.columns)/2, startingPoints: 0, pointsPerMatch: 10, levelTimerInSeconds: 120)
+        //Start game Logic
+        gameLogic.Start(
+            numPairs: (grid.rows*grid.columns)/2,
+            startingPoints: 0,
+            pointsPerMatch: MenuScene.difficulties[MenuScene.diffIndex].pointsPerMatch,
+            levelTimerInSeconds: 120)
+        
         spawnCards(view: view, cards : gameLogic.cards)
         
         //PUNTUACIÓN

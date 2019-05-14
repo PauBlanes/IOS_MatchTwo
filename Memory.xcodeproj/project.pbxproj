@@ -30,6 +30,7 @@
 		1E16FC912237E94600132EB3 /* ImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E16FC902237E94600132EB3 /* ImageButton.swift */; };
 		1E222144225F69DC0061F0B2 /* Difficulty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E222143225F69DC0061F0B2 /* Difficulty.swift */; };
 		1E222146225F73900061F0B2 /* AudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E222145225F73900061F0B2 /* AudioController.swift */; };
+		1E23D9BD228AE6AF00C6D5A9 /* RankingsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E23D9BC228AE6AF00C6D5A9 /* RankingsScene.swift */; };
 		1E32A1772243C631000AADAA /* GameLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E32A1762243C631000AADAA /* GameLogic.swift */; };
 		1E32A1792243C707000AADAA /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E32A1782243C707000AADAA /* Card.swift */; };
 		1E4B1BE3224E547000500F86 /* preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4B1BE2224E547000500F86 /* preferences.swift */; };
@@ -68,6 +69,7 @@
 		1E16FC902237E94600132EB3 /* ImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageButton.swift; sourceTree = "<group>"; };
 		1E222143225F69DC0061F0B2 /* Difficulty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Difficulty.swift; sourceTree = "<group>"; };
 		1E222145225F73900061F0B2 /* AudioController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioController.swift; sourceTree = "<group>"; };
+		1E23D9BC228AE6AF00C6D5A9 /* RankingsScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankingsScene.swift; sourceTree = "<group>"; };
 		1E32A1762243C631000AADAA /* GameLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameLogic.swift; sourceTree = "<group>"; };
 		1E32A1782243C707000AADAA /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		1E4B1BE2224E547000500F86 /* preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = preferences.swift; sourceTree = "<group>"; };
@@ -142,6 +144,7 @@
 				1E16FC7A2237E10300132EB3 /* GameScene.swift */,
 				1E16FC8E2237E21100132EB3 /* MenuScene.swift */,
 				1EDF2945223A8E1900B4F56A /* SettingsScene.swift */,
+				1E23D9BC228AE6AF00C6D5A9 /* RankingsScene.swift */,
 				1EDF2947223A9B1E00B4F56A /* CardSprite.swift */,
 				1E32A1762243C631000AADAA /* GameLogic.swift */,
 				1E32A1782243C707000AADAA /* Card.swift */,
@@ -374,6 +377,7 @@
 				1E16FC8D2237E16C00132EB3 /* Button.swift in Sources */,
 				1EFBBF4122772844005B3728 /* FirebaseManager.swift in Sources */,
 				1E222146225F73900061F0B2 /* AudioController.swift in Sources */,
+				1E23D9BD228AE6AF00C6D5A9 /* RankingsScene.swift in Sources */,
 				1EDF2948223A9B1E00B4F56A /* CardSprite.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

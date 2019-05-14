@@ -13,6 +13,7 @@ protocol SceneControllerDelegate: class {
     func goToGame(sender: SKScene, grid:Grid)
     func goToSettings(sender: MenuScene)
     func goToMenu (sender: SKScene?)
+    func goToRankings (sender: SKScene?)
 }
 
 class MenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
@@ -32,22 +33,15 @@ class MenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
     
     static var diffIndex = Preferences.getDifficulty()
     static var difficulties:[Difficulty] = [
-        Difficulty(tag: "EASY",description: "6 Diferent Pairs!",grid: Grid(rows: 4, columns: 3)),
-        Difficulty(tag: "MEDIUM",description: "10 Diferent Pairs!" ,grid: Grid(rows: 5, columns: 4)),
-        Difficulty(tag: "HARD",description: "15 Diferent Pairs!" , grid: Grid(rows: 6, columns: 5))
+        Difficulty(tag: "EASY",description: "6 Diferent Pairs!",grid: Grid(rows: 4, columns: 3), pointsPerMatch: 7),
+        Difficulty(tag: "MEDIUM",description: "10 Diferent Pairs!" ,grid: Grid(rows: 5, columns: 4), pointsPerMatch: 10),
+        Difficulty(tag: "HARD",description: "15 Diferent Pairs!" , grid: Grid(rows: 6, columns: 5), pointsPerMatch: 15)
     ]
     
     var swipeRightGesture = UISwipeGestureRecognizer()
     var swipeLeftGesture = UISwipeGestureRecognizer()
     
     override func didMove(to view: SKView) {
-        
-        FirebaseManager.instance.getTop10Scores() { rList in
-            for persona in rList {
-                print(persona.key)
-                print(persona.value)
-            }
-        }
         
         //Background
         let background = SKSpriteNode(imageNamed: "bg")
@@ -147,7 +141,7 @@ class MenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
             sceneControllerDelegate?.goToSettings(sender: self)
         }
         else if sender == rankingsButton {
-            print("FIREBASE")
+            sceneControllerDelegate?.goToRankings(sender: self)
         }else if sender == leftArrowButton {
             MenuScene.diffIndex -= 1
             if MenuScene.diffIndex < 0 {

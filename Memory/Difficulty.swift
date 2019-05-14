@@ -12,4 +12,5 @@ struct Difficulty {
     var tag = ""
     var description = ""
     var grid = Grid(rows: 0, columns: 0)
+    var pointsPerMatch = 0
 }

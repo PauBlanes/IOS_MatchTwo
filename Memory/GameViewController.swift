@@ -97,6 +97,19 @@ class GameViewController: UIViewController, SceneControllerDelegate/*, GADBanner
         
     }
     
+    func goToRankings(sender: SKScene?) {
+        //LOAD MENU
+        if let view = self.view as? SKView {
+            let scene = RankingsScene(size: view.frame.size)
+            scene.sceneControllerDelegate = self
+            // Set the scale mode to scale to fit the window
+            scene.scaleMode = .aspectFill
+            
+            // Present the scene
+            view.presentScene(scene)
+        }
+    }
+    
     func goToMenu(sender: SKScene?){
         
         //LOAD MENU
