@@ -18,7 +18,7 @@ class CardSprite: SKSpriteNode {
     //Variables de clase
     static let flipTime = 0.3
     static let waitUntilFlipBack = 0.5
-    static let backTexture: SKTexture = SKTexture(imageNamed: "back")
+    static var backTexture: SKTexture = SKTexture(imageNamed: "back")
     
     weak var delegate: CardSpriteDelegate?
     
@@ -66,8 +66,7 @@ class CardSprite: SKSpriteNode {
             SKAction.run{
                 self.isUserInteractionEnabled = true
             }]))
-    }
-    
+    }    
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         if let touch = touches.first, let parent = parent {

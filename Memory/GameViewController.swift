@@ -21,6 +21,8 @@ class GameViewController: UIViewController, SceneControllerDelegate/*, GADBanner
     let locationManager = CLLocationManager()
     let notificationCenter = UNUserNotificationCenter.current()
     
+    var scene = SKScene()
+    
     /*func adViewWillPresentScreen(_ bannerView: GADBannerView) {
         Analytics.logEvent("bannerClick", parameters: nil)
     }*/
@@ -100,8 +102,10 @@ class GameViewController: UIViewController, SceneControllerDelegate/*, GADBanner
     func goToRankings(sender: SKScene?) {
         //LOAD MENU
         if let view = self.view as? SKView {
-            let scene = RankingsScene(size: view.frame.size)
-            scene.sceneControllerDelegate = self
+            scene = RankingsScene(size: view.frame.size)
+            if let scene = scene as? RankingsScene {
+                scene.sceneControllerDelegate = self
+            }
             // Set the scale mode to scale to fit the window
             scene.scaleMode = .aspectFill
             
@@ -114,8 +118,10 @@ class GameViewController: UIViewController, SceneControllerDelegate/*, GADBanner
         
         //LOAD MENU
         if let view = self.view as? SKView {
-            let scene = MenuScene(size: view.frame.size)
-            scene.sceneControllerDelegate = self
+            scene = MenuScene(size: view.frame.size)
+            if let scene = scene as? MenuScene {
+                scene.sceneControllerDelegate = self
+            }
             // Set the scale mode to scale to fit the window
             scene.scaleMode = .aspectFill
             
@@ -126,10 +132,13 @@ class GameViewController: UIViewController, SceneControllerDelegate/*, GADBanner
     
     func goToGame(sender: SKScene, grid:Grid) {
         if let view = self.view as? SKView {
-            let scene = GameScene(size: view.frame.size)
-            scene.grid.columns = grid.columns
-            scene.grid.rows = grid.rows
-            scene.sceneControllerDelegate = self
+            scene = GameScene(size: view.frame.size)
+            if let scene = scene as? GameScene {
+                scene.grid.columns = grid.columns
+                scene.grid.rows = grid.rows
+                scene.sceneControllerDelegate = self
+            }
+            
             // Set the scale mode to scale to fit the window
             scene.scaleMode = .aspectFill
             
@@ -140,8 +149,10 @@ class GameViewController: UIViewController, SceneControllerDelegate/*, GADBanner
     
     func goToSettings(sender: MenuScene) {
         if let view = self.view as? SKView {
-            let scene = SettingsScene(size: view.frame.size)
-            scene.sceneControllerDelegate = self
+            scene = SettingsScene(size: view.frame.size)
+            if let scene = scene as? SettingsScene {
+                scene.sceneControllerDelegate = self
+            }           
             
             // Set the scale mode to scale to fit the window
             scene.scaleMode = .aspectFill
@@ -189,7 +200,7 @@ class GameViewController: UIViewController, SceneControllerDelegate/*, GADBanner
     func showHello() {
         
         notificationCenter.getNotificationSettings(completionHandler: {
-            [weak self] (settings) in //avisem que self pot ser que no existeixi
+            [weak self] (settings) in //avisem que self pot ser que no existeixi pq s'ha tancat o algo
             if settings.authorizationStatus == .authorized {
                 //Send notification
                 self?.sendHelloNotification()
@@ -197,9 +208,13 @@ class GameViewController: UIViewController, SceneControllerDelegate/*, GADBanner
                 //Show popup, pro al ser asincrono podria ser que la aplicacio ja s'hagués tancat i petaria
                 self?.showHelloPopup()
             }
+            
+            CardSprite.backTexture = SKTexture(imageNamed: "back_london")
+            if let scene = self?.scene as? GameScene {
+                scene.changeBackTextures()
+            }
+            
         })
-        
-        
     }
     
     func sendHelloNotification() {
@@ -268,6 +283,11 @@ extension GameViewController: CLLocationManagerDelegate {
                 print("user in location")
                 showHello()
             }
+            /*let previousLocation = locations[locations.count-2]
+            if previousLocation.distance(from: officeLocation) < 50 {
+                print("leaving location")
+                //Show bye (tornar les cartes a normal)
+            }*/
         }
     }
     

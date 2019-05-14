@@ -419,4 +419,10 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
     func goToLevel(level: Int) {
         Analytics.logEvent("nextLevel", parameters: ["levelname": level])
     }
+    
+    func changeBackTextures() {
+        for card in cardSprites {
+            card.run(SKAction.setTexture(CardSprite.backTexture))
+        }
+    }
 }

@@ -6,5 +6,5 @@
   Copyright © 2019 Pau Blanes. All rights reserved.
 */
 
-"Hello_dialog_title" = "Hello";
-"Hello_dialog_msg" = "Congratulations! You found our ofice";
+"Hello_dialog_title" = "Welcome to London!";
+"Hello_dialog_msg" = "You found an easter egg, now the back of the cards has a london theme";

@@ -6,5 +6,5 @@
   Copyright © 2019 Pau Blanes. All rights reserved.
 */
 
-"Hello_dialog_title" = "Hola";
-"Hello_dialog_msg" = "Felicidades! Has encontrado nuestra oficina";
+"Hello_dialog_title" = "Bienvenido a Londres!";
+"Hello_dialog_msg" = "Ahora el dorso de las cartas tiene temática londinense";
