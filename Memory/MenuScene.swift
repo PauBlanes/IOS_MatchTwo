@@ -33,9 +33,17 @@ class MenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
     
     static var diffIndex = Preferences.getDifficulty()
     static var difficulties:[Difficulty] = [
-        Difficulty(tag: "EASY",description: "6 Diferent Pairs!",grid: Grid(rows: 4, columns: 3), pointsPerMatch: 7),
-        Difficulty(tag: "MEDIUM",description: "10 Diferent Pairs!" ,grid: Grid(rows: 5, columns: 4), pointsPerMatch: 10),
-        Difficulty(tag: "HARD",description: "15 Diferent Pairs!" , grid: Grid(rows: 6, columns: 5), pointsPerMatch: 15)
+        Difficulty(tag: NSLocalizedString("diff_easy_title", comment: ""),
+                   description: NSLocalizedString("diff_easy_description", comment: ""),
+                   grid: Grid(rows: 4, columns: 3), pointsPerMatch: 7),
+        Difficulty(tag: NSLocalizedString("diff_medium_title", comment: ""),
+                   description: NSLocalizedString("diff_medium_description", comment: ""),
+                   grid: Grid(rows: 5, columns: 4),
+                   pointsPerMatch: 10),
+        Difficulty(tag: NSLocalizedString("diff_hard_title", comment: ""),
+                   description: NSLocalizedString("diff_hard_description", comment: ""),
+                   grid: Grid(rows: 6, columns: 5),
+                   pointsPerMatch: 15)
     ]
     
     var swipeRightGesture = UISwipeGestureRecognizer()
@@ -95,7 +103,7 @@ class MenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
         
         //Title
         addChild(title)
-        title.text = "MATCH TWO!"
+        title.text = NSLocalizedString("game_title", comment: "")
         title.fontSize = 36
         title.position = CGPoint(x: view.center.x, y: view.frame.height * 0.75)
         title.alpha = 0.0

@@ -8,3 +8,15 @@
 
 "Hello_dialog_title" = "Welcome to London!";
 "Hello_dialog_msg" = "You found an easter egg, now the back of the cards has a london theme";
+"diff_easy_title" = "EASY";
+"diff_medium_title" = "MEDIUM";
+"diff_hard_title" = "HARD";
+"diff_easy_description" = "6 diferent pairs!";
+"diff_medium_description" = "10 diferent pairs!";
+"diff_hard_description" = "15 diferent pairs!";
+"game_title" = "MATCH TWO!";
+"time" = "Time";
+"your_score_is" = "Your score is";
+"time_left" = "Time left";
+"you_win" = "YOU WIN!";
+"you_lose" = "YOU LOSE...";

@@ -8,3 +8,15 @@
 
 "Hello_dialog_title" = "Hola";
 "Hello_dialog_msg" = "Felicitats! Has trobat la nostra oficina";
+"diff_easy_title" = "FÀCIL";
+"diff_medium_title" = "MITJÀ";
+"diff_hard_title" = "DIFÍCIL";
+"diff_easy_description" = "6 parelles diferents!";
+"diff_medium_description" = "10 parelles diferents!";
+"diff_hard_description" = "15 parelles diferents!";
+"game_title" = "EMPARELLA DOS!";
+"time" = "Temps";
+"your_score_is" = "La teva puntuació es";
+"time_left" = "Temps restant";
+"you_win" = "HAS GUANYAT!";
+"you_lose" = "HAS PERDUT...";

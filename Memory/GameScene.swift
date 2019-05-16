@@ -123,6 +123,7 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
         //COMBOS
         comboLabel.text = "COMBO \n X\(gameLogic.consecutiveMatches)"
         comboLabel.fontSize = 48
+        comboLabel.isUserInteractionEnabled = false
         comboLabel.position = CGPoint(x: view.frame.width/2, y: view.frame.height/2)
         comboLabel.alpha = 0
         addChild(comboLabel)
@@ -264,6 +265,7 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
                 sceneControllerDelegate?.goToGame(sender: self, grid: grid)
             case nextLevel:
                 MenuScene.diffIndex += 1
+                goToLevel(level: MenuScene.diffIndex)
                 sceneControllerDelegate?.goToGame(sender: self, grid: MenuScene.difficulties[MenuScene.diffIndex].grid)
             default:
                     print("something went wrong")
@@ -273,7 +275,7 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
     
     //UI
     func setTimerText() {
-        self.levelTimerLabel.text = "Time: \(Int(self.gameLogic.levelTimerValue/60)):\(self.gameLogic.levelTimerValue%60)"
+        self.levelTimerLabel.text = "\(NSLocalizedString("time", comment: "")): \(Int(self.gameLogic.levelTimerValue/60)):\(self.gameLogic.levelTimerValue%60)"
     }
     func updateUI () {
         //Actualiazr puntuación
@@ -327,7 +329,7 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
             
             //textos
             let winTextLabel = SKLabelNode(fontNamed: "Verdana")
-            winTextLabel.fontSize = 54
+            winTextLabel.fontSize = 48
             winTextLabel.position = CGPoint(x: 0, y: bgLabel.frame.height*0.15)
             winTextLabel.alpha = 0
             bgLabel.run(fadeInAction)
@@ -335,8 +337,8 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
             bgLabel.addChild(winTextLabel)
             
             let scoreLabel = SKLabelNode(fontNamed: "Verdana")
-            scoreLabel.text = "Your score is: \(gameLogic.points)"
-            scoreLabel.fontSize = 35
+            scoreLabel.text = "\(NSLocalizedString("your_score_is", comment: "")): \(gameLogic.points)"
+            scoreLabel.fontSize = 28
             scoreLabel.position = CGPoint(x: 0, y: -bgLabel.frame.height*0.10)
             scoreLabel.alpha = 0
             scoreLabel.run(fadeInAction)
@@ -346,14 +348,14 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
                 
                 //Labels
                 let timeLabel = SKLabelNode(fontNamed: "Verdana")
-                timeLabel.text = "Time left: \(Int(self.gameLogic.levelTimerValue/60)):\(self.gameLogic.levelTimerValue%60)"
-                timeLabel.fontSize = 35
+                timeLabel.text = "\(NSLocalizedString("time_left", comment: "")): \(Int(self.gameLogic.levelTimerValue/60)):\(self.gameLogic.levelTimerValue%60)"
+                timeLabel.fontSize = 28
                 timeLabel.position = CGPoint(x: 0, y: -bgLabel.frame.height*0.20)
                 timeLabel.alpha = 0
                 timeLabel.run(fadeInAction)
                 bgLabel.addChild(timeLabel)
                 
-                winTextLabel.text = "YOU WIN!"
+                winTextLabel.text = "\(NSLocalizedString("you_win", comment: ""))"
                 victorySound.seek(to: CMTime.zero)
                 victorySound.play()
                 
@@ -361,7 +363,7 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
                 FirebaseManager.instance.updateScore(score: gameLogic.points)
                 
             } else {
-                winTextLabel.text = "YOU LOSE..."
+                winTextLabel.text = "\(NSLocalizedString("you_lose", comment: ""))"
                 defeatSound.seek(to: CMTime.zero)
                 defeatSound.play()
                 
@@ -414,6 +416,7 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
                 endMatch(won: true)
             }
         }
+        
     }
     
     func goToLevel(level: Int) {

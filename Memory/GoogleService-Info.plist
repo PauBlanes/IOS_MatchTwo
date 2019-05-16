@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>926369594205-sabmodb2vir7lfje2tfcdrqupiu4155i.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.926369594205-sabmodb2vir7lfje2tfcdrqupiu4155i</string>
+	<key>API_KEY</key>
+	<string>AIzaSyALNE_UevRJGEcB9be4iH3FWz3CyEqQiRM</string>
+	<key>GCM_SENDER_ID</key>
+	<string>926369594205</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.paublanes.Memory</string>
+	<key>PROJECT_ID</key>
+	<string>match2two</string>
+	<key>STORAGE_BUCKET</key>
+	<string>match2two.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false/>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true/>
+	<key>IS_GCM_ENABLED</key>
+	<true/>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true/>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:926369594205:ios:7515c0c273a8bc9e</string>
+	<key>DATABASE_URL</key>
+	<string>https://match2two.firebaseio.com</string>
+</dict>
+</plist>

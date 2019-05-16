@@ -8,3 +8,15 @@
 
 "Hello_dialog_title" = "Bienvenido a Londres!";
 "Hello_dialog_msg" = "Ahora el dorso de las cartas tiene temática londinense";
+"diff_easy_title" = "FÁCIL";
+"diff_medium_title" = "MEDIO";
+"diff_hard_title" = "DIFÍCIL";
+"diff_easy_description" = "6 parejas diferentes!";
+"diff_medium_description" = "10 parejas diferentes!";
+"diff_hard_description" = "15 parejas diferentes!";
+"game_title" = "EMPAREJA DOS!";
+"time" = "Tiempo";
+"your_score_is" = "Tu puntuación es";
+"time_left" = "Tiempo restante";
+"you_win" = "HAS GANADO!";
+"you_lose" = "HAS PERDIDO...";

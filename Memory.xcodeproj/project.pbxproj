@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1E0567542271DD0C00C0E136 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1E0567532271DD0C00C0E136 /* GoogleService-Info.plist */; };
 		1E0567782271F12000C0E136 /* awesomeness.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1E05676F2271F11A00C0E136 /* awesomeness.wav */; };
 		1E0567792271F12000C0E136 /* denied.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1E0567702271F11B00C0E136 /* denied.wav */; };
 		1E05677A2271F12000C0E136 /* incorrect.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1E0567712271F11B00C0E136 /* incorrect.wav */; };
@@ -36,6 +35,7 @@
 		1E4B1BE3224E547000500F86 /* preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4B1BE2224E547000500F86 /* preferences.swift */; };
 		1EDF2946223A8E1900B4F56A /* SettingsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EDF2945223A8E1900B4F56A /* SettingsScene.swift */; };
 		1EDF2948223A9B1E00B4F56A /* CardSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EDF2947223A9B1E00B4F56A /* CardSprite.swift */; };
+		1EE92CD8228D8B6C009A191B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1EE92CD7228D8B6C009A191B /* GoogleService-Info.plist */; };
 		1EF748EE22845AA40021CD3A /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1EF748F022845AA40021CD3A /* Localizable.strings */; };
 		1EF748F522845CD10021CD3A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1EF748F722845CD10021CD3A /* InfoPlist.strings */; };
 		1EFBBF4122772844005B3728 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EFBBF4022772844005B3728 /* FirebaseManager.swift */; };
@@ -44,7 +44,6 @@
 
 /* Begin PBXFileReference section */
 		14D9104518B2D8F555E2BE53 /* Pods-Memory.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Memory.release.xcconfig"; path = "Target Support Files/Pods-Memory/Pods-Memory.release.xcconfig"; sourceTree = "<group>"; };
-		1E0567532271DD0C00C0E136 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1E05676F2271F11A00C0E136 /* awesomeness.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = awesomeness.wav; sourceTree = "<group>"; };
 		1E0567702271F11B00C0E136 /* denied.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = denied.wav; sourceTree = "<group>"; };
 		1E0567712271F11B00C0E136 /* incorrect.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = incorrect.wav; sourceTree = "<group>"; };
@@ -75,6 +74,7 @@
 		1E4B1BE2224E547000500F86 /* preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = preferences.swift; sourceTree = "<group>"; };
 		1EDF2945223A8E1900B4F56A /* SettingsScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScene.swift; sourceTree = "<group>"; };
 		1EDF2947223A9B1E00B4F56A /* CardSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSprite.swift; sourceTree = "<group>"; };
+		1EE92CD7228D8B6C009A191B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1EF748E8228457620021CD3A /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
 		1EF748E9228457630021CD3A /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		1EF748EA228457710021CD3A /* ca */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ca; path = ca.lproj/Main.strings; sourceTree = "<group>"; };
@@ -152,7 +152,7 @@
 				1E222143225F69DC0061F0B2 /* Difficulty.swift */,
 				1E222145225F73900061F0B2 /* AudioController.swift */,
 				1EFBBF4022772844005B3728 /* FirebaseManager.swift */,
-				1E0567532271DD0C00C0E136 /* GoogleService-Info.plist */,
+				1EE92CD7228D8B6C009A191B /* GoogleService-Info.plist */,
 				1E16FC862237E10400132EB3 /* Info.plist */,
 				1EF748F022845AA40021CD3A /* Localizable.strings */,
 				1EF748F722845CD10021CD3A /* InfoPlist.strings */,
@@ -259,11 +259,11 @@
 				1E05677A2271F12000C0E136 /* incorrect.wav in Resources */,
 				1E05677B2271F12000C0E136 /* victory.mp3 in Resources */,
 				1E0567782271F12000C0E136 /* awesomeness.wav in Resources */,
+				1EE92CD8228D8B6C009A191B /* GoogleService-Info.plist in Resources */,
 				1E16FC792237E10300132EB3 /* Actions.sks in Resources */,
 				1E05677E2271F12000C0E136 /* defeat.wav in Resources */,
 				1E05677F2271F12000C0E136 /* correct.wav in Resources */,
 				1EF748EE22845AA40021CD3A /* Localizable.strings in Resources */,
-				1E0567542271DD0C00C0E136 /* GoogleService-Info.plist in Resources */,
 				1E0567792271F12000C0E136 /* denied.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
