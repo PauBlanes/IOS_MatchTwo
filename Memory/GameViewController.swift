@@ -11,37 +11,26 @@ import SpriteKit
 import GameplayKit
 import FirebaseUI
 import FirebaseAuth
-//import GoogleMobileAds
 import FirebaseAnalytics
 import CoreLocation
 import UserNotifications
+import GoogleMobileAds
 
-class GameViewController: UIViewController, SceneControllerDelegate/*, GADBannerViewDelegate*/ {
+class GameViewController: UIViewController, SceneControllerDelegate {
     
     let locationManager = CLLocationManager()
     let notificationCenter = UNUserNotificationCenter.current()
     
     var scene = SKScene()
     
-    /*func adViewWillPresentScreen(_ bannerView: GADBannerView) {
-        Analytics.logEvent("bannerClick", parameters: nil)
-    }*/
-    
-    //var bannerView: GADBannerView!
+    var bannerView: GADBannerView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //Banner
-        /*bannerView = GADBannerView(adSize: kGADAdSizeBanner)
-        addBannerViewToView(bannerView)
-        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716"
-        bannerView.rootViewController = self
-        bannerView.load(GADRequest())
-        bannerView.delegate = self*/
-        
         initLocation()
         initNotifications()
+        addBanner()
     }
     
     override func viewDidAppear(_ animated: Bool) { //Per evitar error whose method is not in the window hierarchy
@@ -50,27 +39,6 @@ class GameViewController: UIViewController, SceneControllerDelegate/*, GADBanner
         FirebaseManager.controller = self
         FirebaseManager.instance.tryLogin()
     }
-    
-    /*func addBannerViewToView(_ bannerView: GADBannerView) {
-        bannerView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(bannerView)
-        view.addConstraints(
-            [NSLayoutConstraint(item: bannerView,
-                                attribute: .bottom,
-                                relatedBy: .equal,
-                                toItem: bottomLayoutGuide,
-                                attribute: .top,
-                                multiplier: 1,
-                                constant: 0),
-             NSLayoutConstraint(item: bannerView,
-                                attribute: .centerX,
-                                relatedBy: .equal,
-                                toItem: view,
-                                attribute: .centerX,
-                                multiplier: 1,
-                                constant: 0)
-            ])
-    }*/
     
     override var shouldAutorotate: Bool {
         return false
@@ -122,6 +90,9 @@ class GameViewController: UIViewController, SceneControllerDelegate/*, GADBanner
             if let scene = scene as? MenuScene {
                 scene.sceneControllerDelegate = self
             }
+            
+            setBannerVisibility(to: true)
+            
             // Set the scale mode to scale to fit the window
             scene.scaleMode = .aspectFill
             
@@ -134,6 +105,9 @@ class GameViewController: UIViewController, SceneControllerDelegate/*, GADBanner
         if let view = self.view as? SKView {
             scene = GameScene(size: view.frame.size)
             if let scene = scene as? GameScene {
+                
+                setBannerVisibility(to: false)
+                
                 scene.grid.columns = grid.columns
                 scene.grid.rows = grid.rows
                 scene.sceneControllerDelegate = self
@@ -298,6 +272,51 @@ extension GameViewController: CLLocationManagerDelegate {
         print(error.localizedDescription)
     }
 }
+
+//Banner
+extension GameViewController: GADBannerViewDelegate {
+    
+    //Analytics
+    func adViewWillPresentScreen(_ bannerView: GADBannerView) {
+        Analytics.logEvent("bannerClick", parameters: nil)
+    }
+    
+    //Load banner
+    func addBanner() {
+        bannerView = GADBannerView(adSize: kGADAdSizeBanner)
+        addBannerViewToView(bannerView)
+        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716" //ca-app-pub-8304393808597863/5240933523
+        bannerView.rootViewController = self
+        bannerView.load(GADRequest())
+        bannerView.delegate = self
+    }
+    
+    func addBannerViewToView(_ bannerView: GADBannerView) {
+        bannerView.translatesAutoresizingMaskIntoConstraints = false
+        view?.addSubview(bannerView)
+        view.addConstraints(
+            [NSLayoutConstraint(item: bannerView,
+                                attribute: .bottom,
+                                relatedBy: .equal,
+                                toItem: bottomLayoutGuide,
+                                attribute: .top,
+                                multiplier: 1,
+                                constant: 0),
+             NSLayoutConstraint(item: bannerView,
+                                attribute: .centerX,
+                                relatedBy: .equal,
+                                toItem: view,
+                                attribute: .centerX,
+                                multiplier: 1,
+                                constant: 0)
+            ])
+    }
+    
+    func setBannerVisibility(to visibility: Bool) {
+        bannerView.isHidden = !visibility
+    }
+}
+
 
 
 

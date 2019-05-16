@@ -125,7 +125,6 @@ class MenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
                                      action: #selector(swipeLeft(sender:)))
         swipeLeftGesture.direction = .left
         view.addGestureRecognizer(swipeLeftGesture)
-        
     }
     
     @objc func swipeRight(sender: UISwipeGestureRecognizer){
@@ -172,4 +171,5 @@ class MenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
     }
+    
 }
