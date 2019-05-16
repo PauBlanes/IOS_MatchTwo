@@ -10,6 +10,7 @@ import SpriteKit
 import GameplayKit
 import AVFoundation
 import FirebaseAnalytics
+import CoreMotion
 
 struct Directions {
     var top:CGFloat
@@ -56,6 +57,10 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
     let deniedSound = AVPlayer(url: Bundle.main.url(forResource: "denied.wav", withExtension: nil)!)
     let defeatSound = AVPlayer(url: Bundle.main.url(forResource: "defeat.wav", withExtension: nil)!)
     let victorySound = AVPlayer(url: Bundle.main.url(forResource: "victory.mp3", withExtension: nil)!)
+    
+    //Acelerometer
+    let manager = CMMotionManager()
+    let maxDistance = CGFloat(40.0)
     
     override func didMove(to view: SKView) {        
         
@@ -428,4 +433,31 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
             card.run(SKAction.setTexture(CardSprite.backTexture))
         }
     }
+}
+
+//ACELEROMETER
+extension GameScene {
+    
+    func useAccelerometer() {
+        
+        var tiltX: CGFloat = 0.0
+        let alpha: CGFloat = 0.25
+        
+        // Define block to handle accelerometer updates
+        if manager.isAccelerometerAvailable {
+            manager.accelerometerUpdateInterval = 0.1
+            manager.startGyroUpdates(to: .main) { [weak self] (data, error) in
+                if let data = data, let cardSprites = self?.cardSprites {
+                    // Low-pass filter to smooth the measurements
+                    tiltX = tiltX * (1-alpha) + CGFloat(data.rotationRate.x) * alpha
+                    for card in cardSprites {
+                        let newX = card.position.x + tiltX
+                        //Clamp
+                        //set card to new x
+                    }
+                }
+            }
+        }
+    }
+    
 }
