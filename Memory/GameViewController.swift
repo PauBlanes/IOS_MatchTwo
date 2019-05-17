@@ -257,12 +257,6 @@ extension GameViewController: CLLocationManagerDelegate {
                 print("user in location")
                 showHello()
             }
-           
-            /*let previousLocation = locations[locations.count-2]
-            if previousLocation.distance(from: officeLocation) < 50 {
-                print("leaving location")
-                //Show bye (tornar les cartes a normal)
-            }*/
         }
     }
     

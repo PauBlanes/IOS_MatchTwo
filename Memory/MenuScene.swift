@@ -8,6 +8,7 @@
 
 import SpriteKit
 import GameplayKit
+import CoreMotion
 
 protocol SceneControllerDelegate: class {
     func goToGame(sender: SKScene, grid:Grid)
@@ -46,8 +47,14 @@ class MenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
                    pointsPerMatch: 15)
     ]
     
+    //Swipe
     var swipeRightGesture = UISwipeGestureRecognizer()
     var swipeLeftGesture = UISwipeGestureRecognizer()
+    
+    //Acelerometer
+    let manager = CMMotionManager()
+    let maxDistance = CGFloat(10.0)
+    private var maracasIcon = SKSpriteNode(imageNamed: "maracas_icon")
     
     override func didMove(to view: SKView) {
         
@@ -59,6 +66,13 @@ class MenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
         
         //Music
         AudioController.shared.play()
+        
+        //Acelerometer
+        useAccelerometer()
+        maracasIcon.position = CGPoint(x: view.frame.width/2, y: view.frame.height*0.9)
+        maracasIcon.setScale(0.5)
+        maracasIcon.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        addChild(maracasIcon)
         
         //Set the butons
         rankingsButton.position = CGPoint(x: view.frame.width/2, y: view.frame.height * 0.15)
@@ -170,6 +184,34 @@ class MenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
+    }
+    
+}
+
+//ACELEROMETER
+extension MenuScene {
+    
+    func useAccelerometer() {
+        
+        var tiltX: CGFloat = 0.0
+        let alpha: CGFloat = 0.15
+        
+        // Define block to handle accelerometer updates
+        if manager.isAccelerometerAvailable {
+            manager.accelerometerUpdateInterval = 0.1
+            manager.startGyroUpdates(to: .main) { [weak self] (data, error) in
+                if let data = data, let view = self?.view {
+                    // Low-pass filter to smooth the measurements
+                    tiltX = tiltX * (1-alpha) + CGFloat(data.rotationRate.x) * alpha
+                    
+                    let deltaX = tiltX * 30
+                    if view.frame.width/2 + deltaX < view.frame.width*0.8,
+                        view.frame.width/2 + deltaX > view.frame.width*0.2 {
+                        self?.maracasIcon.position.x = view.frame.width/2 + deltaX
+                    }
+                }
+            }
+        }
     }
     
 }
