@@ -65,6 +65,7 @@ class MenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
         addChild(background)
         
         //Music
+        Preferences.setSound(to: Preferences.isSoundOn())
         AudioController.shared.play()
         
         //Acelerometer

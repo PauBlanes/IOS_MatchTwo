@@ -46,8 +46,13 @@ class SettingsScene: SKScene, ImageButtonDelegate {
         signOutButton.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         addChild(signOutButton)
         
-        if !Preferences.isSoundOn() {
-            toggleMuted()
+        muted = !Preferences.isSoundOn()
+        if muted {
+            muteButton.texture = SKTexture(imageNamed: "mute_icon")
+            Preferences.setSound(to: false)
+        }
+        else {
+            muteButton.texture = SKTexture(imageNamed: "volume_icon")
         }
     }
     
@@ -73,6 +78,6 @@ class SettingsScene: SKScene, ImageButtonDelegate {
             muteButton.texture = SKTexture(imageNamed: "volume_icon")
         }
         
-        Preferences.toggleSound()
+        Preferences.setSound(to: !muted)
     }
 }

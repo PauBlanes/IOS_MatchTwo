@@ -31,11 +31,12 @@ class Preferences {
             let soundOn = UserDefaults.standard.bool(forKey: k_SOUND_ON) //si existe y tiene valor true, yes, 1 devuelve true. Si no existe devuelve false
             return soundOn
         }
+        
         return true //si no existe devolvemos true, para que al inicio sea true
         
     }
-    static func toggleSound() {
-        let soundOn = isSoundOn()
-        UserDefaults.standard.set(!soundOn, forKey: k_SOUND_ON) //si no existe creará a key
+    static func setSound(to isOn: Bool) {
+        UserDefaults.standard.set(isOn, forKey: k_SOUND_ON) //si no existe creará a key
+        AudioController.shared.setVolume()
     }
 }
