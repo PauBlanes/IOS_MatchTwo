@@ -40,6 +40,9 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
     private var comboLabel : SKLabelNode = SKLabelNode(fontNamed: "Verdana")
     var numCombos = 1
     
+    //Show match
+    private var matchedCardBig = SKSpriteNode(imageNamed: "card1")
+    
     //Timer
     var levelTimerLabel = SKLabelNode(fontNamed: "Verdana")
     var matchEnded = false
@@ -128,6 +131,13 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
         comboLabel.alpha = 0
         addChild(comboLabel)
         numCombos = gameLogic.consecutiveMatches
+        
+        //SHOW MATCH CARD
+        matchedCardBig.position = CGPoint(x: view.frame.width/2, y: view.frame.height/2)
+        matchedCardBig.setScale(1.2)
+        matchedCardBig.alpha = 0
+        addChild(matchedCardBig)
+        
     }
     
     func spawnCards (view: SKView, cards:[Card]) {
@@ -219,6 +229,14 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
                 case CardSelectedResult.match:
                     card.flip(to: CardState.uncovered)
                     
+                    //Show big card
+                    matchedCardBig.run(SKAction.sequence([
+                        SKAction.setTexture(card.frontTexture),
+                        SKAction.fadeIn(withDuration: 0.5),
+                        SKAction.wait(forDuration: 1.5),
+                        SKAction.fadeOut(withDuration: 0.5)]))
+                    
+                    //Play match sound
                     self.run(SKAction.sequence([
                         SKAction.wait(forDuration: CardSprite.flipTime),
                         SKAction.run{
@@ -355,6 +373,7 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
                 timeLabel.run(fadeInAction)
                 bgLabel.addChild(timeLabel)
                 
+                
                 winTextLabel.text = "\(NSLocalizedString("you_win", comment: ""))"
                 victorySound.seek(to: CMTime.zero)
                 victorySound.play()
@@ -366,7 +385,7 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
                 winTextLabel.text = "\(NSLocalizedString("you_lose", comment: ""))"
                 defeatSound.seek(to: CMTime.zero)
                 defeatSound.play()
-                
+                winTextLabel.fontSize = 38
                 bgLabel.run(SKAction.resize(toWidth: view.frame.height*0.25, duration: 0))
             }
             
@@ -388,7 +407,6 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
             restart.anchorPoint = CGPoint(x: 0.5, y: 0.5)
             restart.run(fadeInAction)
             bgLabel.addChild(restart)
-            
             
             if (MenuScene.diffIndex < MenuScene.difficulties.count-1 && won) {
                 nextLevel.position = CGPoint(x: bgLabel.frame.width*0.3, y: -bgLabel.frame.height*0.4)
