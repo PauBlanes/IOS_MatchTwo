@@ -68,20 +68,11 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
         background.position = CGPoint(x: frame.midX, y: frame.midY)
         addChild(background)
         
-        //Start game Logic
-        gameLogic.Start(
-            numPairs: (grid.rows*grid.columns)/2,
-            startingPoints: 0,
-            pointsPerMatch: MenuScene.difficulties[MenuScene.diffIndex].pointsPerMatch,
-            levelTimerInSeconds: 120)
-        
-        spawnCards(view: view, cards : gameLogic.cards)
-        
         //PUNTUACIÓN
         let coinIcon = SKSpriteNode(imageNamed: "coin_icon")
         coinIcon.setScale(0.3)
         coinIcon.anchorPoint = CGPoint(x: 0,y: 1)
-        coinIcon.position = CGPoint(x: view.frame.width*0.38, y: view.frame.height*0.95)
+        coinIcon.position = CGPoint(x: view.frame.width*0.38, y: view.frame.height*0.99-coinIcon.frame.height)
         addChild(coinIcon)
         
         pointsLabel.text = "\(gameLogic.points)"
@@ -138,20 +129,28 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
         matchedCardBig.alpha = 0
         addChild(matchedCardBig)
         
+        //Start game Logic
+        gameLogic.Start(
+            numPairs: (grid.rows*grid.columns)/2,
+            startingPoints: 0,
+            pointsPerMatch: MenuScene.difficulties[MenuScene.diffIndex].pointsPerMatch,
+            levelTimerInSeconds: 120)
+        
+        spawnCards(view: view, cards : gameLogic.cards)
     }
     
     func spawnCards (view: SKView, cards:[Card]) {
         
         //Defino margenes
-        let gameFieldmargins = Directions(
-            top: view.frame.height*0.12, //para que quede por debajo del contador
-            bottom: view.frame.height*0.04,
-            left: view.frame.width*0.02,
-            right: view.frame.width*0.02)
-        var cardMargins = Directions(
+        var gameFieldmargins = Directions(
+            top: view.frame.height * 0.02, //para que quede por debajo del contador
+            bottom: view.frame.height * 0.02,
+            left: 20,
+            right: 20)
+        let cardMargins = Directions(
             top: 0,
-            bottom: 0,
-            left: view.frame.width*0.02,
+            bottom: 10,
+            left: 20,
             right: 0)
         
         //Calculo aspect ratio de la textura para no deformarla
@@ -164,10 +163,9 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
         let cardHeight = cardWidth * cardTextureAspectRatio
         let newSize = CGSize(width: cardWidth, height: cardHeight)
         
-        //Así la grid siempre ocupara la misma height de pantalla independientemente de las cartas
-        cardMargins.bottom = (view.frame.height - gameFieldmargins.top - gameFieldmargins.bottom
-                            - (cardHeight*CGFloat(grid.rows)))/CGFloat(grid.rows-1)
-        
+        let gameFieldSize = (CGFloat(grid.rows)*cardHeight) + (CGFloat(grid.rows)*cardMargins.bottom)
+        let gameFieldCenter = (pointsLabel.position.y - gameFieldmargins.top)/2
+        gameFieldmargins.top = gameFieldCenter + gameFieldSize/2
         
         //Create cards
         for i in 0..<grid.rows {
@@ -182,7 +180,8 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
                 cardSprites[index].frontTexture = SKTexture(imageNamed: "card\(cards[index].pairId+1)")
                 
                 let cardPosX = gameFieldmargins.left + cardWidth/2 + CGFloat(j) * (cardWidth + cardMargins.left)
-                let cardPosY = gameFieldmargins.bottom + cardHeight/2 + CGFloat(i) * (cardHeight + cardMargins.bottom)
+                let cardPosY = gameFieldmargins.top
+                    - (cardHeight/2 + CGFloat(i) * (cardHeight + cardMargins.bottom))
                 cardSprites[index].setCard(newSize: newSize, position : CGPoint(x: cardPosX, y:cardPosY))
                 
                 addChild(cardSprites[index])
