@@ -33,7 +33,6 @@
 		1E32A1772243C631000AADAA /* GameLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E32A1762243C631000AADAA /* GameLogic.swift */; };
 		1E32A1792243C707000AADAA /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E32A1782243C707000AADAA /* Card.swift */; };
 		1E4B1BE3224E547000500F86 /* preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E4B1BE2224E547000500F86 /* preferences.swift */; };
-		1EC6654B2296D0AE00F8F77E /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1EC6654A2296D0AD00F8F77E /* logo.png */; };
 		1EDF2946223A8E1900B4F56A /* SettingsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EDF2945223A8E1900B4F56A /* SettingsScene.swift */; };
 		1EDF2948223A9B1E00B4F56A /* CardSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EDF2947223A9B1E00B4F56A /* CardSprite.swift */; };
 		1EE92CD8228D8B6C009A191B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1EE92CD7228D8B6C009A191B /* GoogleService-Info.plist */; };
@@ -73,7 +72,6 @@
 		1E32A1762243C631000AADAA /* GameLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameLogic.swift; sourceTree = "<group>"; };
 		1E32A1782243C707000AADAA /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		1E4B1BE2224E547000500F86 /* preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = preferences.swift; sourceTree = "<group>"; };
-		1EC6654A2296D0AD00F8F77E /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		1EDF2945223A8E1900B4F56A /* SettingsScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScene.swift; sourceTree = "<group>"; };
 		1EDF2947223A9B1E00B4F56A /* CardSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSprite.swift; sourceTree = "<group>"; };
 		1EE92CD7228D8B6C009A191B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -156,7 +154,6 @@
 				1EFBBF4022772844005B3728 /* FirebaseManager.swift */,
 				1EE92CD7228D8B6C009A191B /* GoogleService-Info.plist */,
 				1E16FC862237E10400132EB3 /* Info.plist */,
-				1EC6654A2296D0AD00F8F77E /* logo.png */,
 				1EF748F022845AA40021CD3A /* Localizable.strings */,
 				1EF748F722845CD10021CD3A /* InfoPlist.strings */,
 			);
@@ -253,7 +250,6 @@
 			files = (
 				1E05677C2271F12000C0E136 /* incorrect.aiff in Resources */,
 				1E16FC802237E10300132EB3 /* Main.storyboard in Resources */,
-				1EC6654B2296D0AE00F8F77E /* logo.png in Resources */,
 				1E16FC772237E10300132EB3 /* GameScene.sks in Resources */,
 				1E0567802271F12000C0E136 /* combo.mp3 in Resources */,
 				1E16FC822237E10400132EB3 /* Assets.xcassets in Resources */,
