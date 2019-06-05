@@ -210,14 +210,17 @@ extension MenuScene {
         node.zPosition = -depth
         node.position = CGPoint(x:screenSize.width / 2.0, y:screenSize.height / 2.0)
         
+        let pi = 3.14159
+        
         // Create squares at random positions
         for i in 1..<13 {
             let square = SKSpriteNode(imageNamed: "card\(i)")
             square.setScale(0.25)
             square.anchorPoint = CGPoint(x: 0.5,y: 0.5)
-            square.alpha = 0.7
+            square.alpha = 0.5
+            square.zRotation = CGFloat(Double(Int.random(in: 0 ..< 360)) * pi/180)
             
-            let x = CGFloat(arc4random_uniform(UInt32(screenSize.width*0.8))) - (screenSize.width*0.8) / 2.0
+            let x = CGFloat(arc4random_uniform(UInt32(screenSize.width*0.85))) - (screenSize.width*0.85) / 2.0
             let y = CGFloat(arc4random_uniform(UInt32(screenSize.height*0.8))) - (screenSize.height*0.8) / 2.0
             square.position = CGPoint(x:x, y:y)
             node.addChild(square)

@@ -25,6 +25,8 @@ class GameLogic {
     
     var levelTimerValue = 0
     
+    let numCardTextures = 15
+    
     func Start(numPairs:Int, startingPoints:Int, pointsPerMatch:Int, levelTimerInSeconds: Int) {
         
         //Initialize points
@@ -39,7 +41,7 @@ class GameLogic {
         }
         for i in 0..<numPairs {
             
-            let chosenPair = i%13 //esto puede ser random de un banco de imágenes
+            let chosenPair = i%numCardTextures //esto puede ser random de un banco de imágenes
             cards[i].pairId = chosenPair
             cards[i+numPairs].pairId = chosenPair
             

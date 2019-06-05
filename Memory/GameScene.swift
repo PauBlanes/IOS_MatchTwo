@@ -76,7 +76,7 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
         addChild(coinIcon)
         
         pointsLabel.text = "\(gameLogic.points)"
-        pointsLabel.fontSize = 38
+        pointsLabel.fontSize = 28
         pointsLabel.position = CGPoint(x: view.frame.width*0.47 + pointsLabel.frame.width/2,
                                        y: coinIcon.position.y - coinIcon.frame.height/2 - pointsLabel.frame.height/2)
         addChild(pointsLabel)
@@ -86,13 +86,13 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
         backButton.position = CGPoint(x: view.frame.width * 0.1, y: coinIcon.position.y - coinIcon.frame.height/2)
         backButton.isUserInteractionEnabled = true
         backButton.delegate = self
-        backButton.setScale(0.5)
+        backButton.setScale(0.4)
         backButton.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         addChild(backButton)
         
         //TIMER
         setTimerText()
-        levelTimerLabel.fontSize = 20
+        levelTimerLabel.fontSize = 14
         levelTimerLabel.position = CGPoint(x: view.frame.width*0.8,
                                            y: coinIcon.position.y - coinIcon.frame.height/2-levelTimerLabel.frame.height/2)
         
@@ -198,7 +198,7 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
         }
     }
     
-    //INTERFFACES
+    //INTERFACES
     func onTap(card: CardSprite) {
         
         if !matchEnded {
@@ -229,6 +229,7 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
                     card.flip(to: CardState.uncovered)
                     
                     //Show big card
+                    matchedCardBig.zPosition = 1
                     matchedCardBig.run(SKAction.sequence([
                         SKAction.setTexture(card.frontTexture),
                         SKAction.fadeIn(withDuration: 0.5),
@@ -309,6 +310,7 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
             comboLabel.text = "COMBO \n X\(gameLogic.consecutiveMatches)"
             comboSound.seek(to: CMTime.zero)
             comboSound.play()
+            comboLabel.zPosition = 2
             comboLabel.run(SKAction.sequence([
                 SKAction.fadeIn(withDuration: 0.5),
                 SKAction.wait(forDuration: 1),
@@ -389,16 +391,16 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
             }
             
             //Botones
-            toMenu.position = CGPoint(x: -bgLabel.frame.width*0.3, y: -bgLabel.frame.height*0.4)
+            toMenu.position = CGPoint(x: -bgLabel.frame.width*0.3, y: -bgLabel.frame.height*0.35)
             toMenu.isUserInteractionEnabled = true
             toMenu.delegate = self
-            toMenu.setScale(0.5)
+            toMenu.setScale(0.4)
             toMenu.alpha = 0
             toMenu.anchorPoint = CGPoint(x: 0.5, y: 0.5)
             toMenu.run(fadeInAction)
             bgLabel.addChild(toMenu)
             
-            restart.position = CGPoint(x: 0, y: -bgLabel.frame.height*0.4)
+            restart.position = CGPoint(x: 0, y: -bgLabel.frame.height*0.35)
             restart.isUserInteractionEnabled = true
             restart.delegate = self
             restart.setScale(0.5)
@@ -408,7 +410,7 @@ class GameScene: SKScene, CardSpriteDelegate, ImageButtonDelegate {
             bgLabel.addChild(restart)
             
             if (MenuScene.diffIndex < MenuScene.difficulties.count-1 && won) {
-                nextLevel.position = CGPoint(x: bgLabel.frame.width*0.3, y: -bgLabel.frame.height*0.4)
+                nextLevel.position = CGPoint(x: bgLabel.frame.width*0.3, y: -bgLabel.frame.height*0.35)
                 nextLevel.isUserInteractionEnabled = true
                 nextLevel.delegate = self
                 nextLevel.setScale(0.5)

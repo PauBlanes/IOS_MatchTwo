@@ -26,7 +26,7 @@ class RankingsScene: SKScene, ImageButtonDelegate {
         backButton.position = CGPoint(x: view.frame.width * 0.1, y: view.frame.height*0.95)
         backButton.isUserInteractionEnabled = true
         backButton.delegate = self
-        backButton.setScale(0.5)
+        backButton.setScale(0.4)
         backButton.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         addChild(backButton)
         
@@ -57,29 +57,20 @@ class RankingsScene: SKScene, ImageButtonDelegate {
         
         var labelY = frame.height*0.65
         let horizontalSeparation:CGFloat = 50
-        let verticalSeparation:CGFloat = 50
+        
         var index = 1
         
         loadingLabel.removeFromParent()
         
         for persona in rankings {
             let nameLabel = SKLabelNode(fontNamed: "Verdana")
-            nameLabel.fontSize = 32
-            nameLabel.text = "\(index). \(persona.name)"
+            nameLabel.fontSize = 22
+            nameLabel.text = "\(index). \(persona.name): \(persona.score) points"
             nameLabel.position = CGPoint(
-                x: frame.width/2 - nameLabel.frame.width,
+                x: frame.width/2,
                 y: labelY)
             
             addChild(nameLabel)
-            
-            let scoreLabel = SKLabelNode(fontNamed: "Verdana")
-            scoreLabel.fontSize = 32
-            scoreLabel.text = "\(persona.score) points"
-            scoreLabel.position = CGPoint(
-                x: nameLabel.position.x + nameLabel.frame.width/2 + scoreLabel.frame.width/2 + verticalSeparation,
-                y: labelY)
-            
-            addChild(scoreLabel)
             
             labelY = nameLabel.position.y - nameLabel.frame.height - horizontalSeparation
             index += 1
