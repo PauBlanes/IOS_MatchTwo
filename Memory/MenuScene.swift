@@ -56,13 +56,23 @@ class MenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
     let maxDistance = CGFloat(10.0)
     private var maracasIcon = SKSpriteNode(imageNamed: "maracas_icon")
     
+    
     override func didMove(to view: SKView) {
+        
+        //PARALAX
+        let numLayers = 3
+        for i in 0..<numLayers {
+            let node = createLayer(depth: CGFloat(numLayers-i), screenSize: view.frame.size)
+            addChild(node)
+        }
         
         //Background
         let background = SKSpriteNode(imageNamed: "bg")
         background.size = frame.size
         background.position = CGPoint(x: frame.midX, y: frame.midY)
+        background.zPosition = CGFloat(-numLayers)
         addChild(background)
+        
         
         //Music
         Preferences.setSound(to: Preferences.isSoundOn())
@@ -187,6 +197,33 @@ class MenuScene: SKScene, ButtonDelegate, ImageButtonDelegate {
         // Called before each frame is rendered
     }
     
+}
+
+//PARALAX
+extension MenuScene {
+    func createLayer(depth: CGFloat, screenSize: CGSize) -> SKNode {
+        
+        let scale = 1.0 / depth
+        let node = SKNode()
+        // Scale layer to create depth effect
+        node.setScale(scale)
+        node.zPosition = -depth
+        node.position = CGPoint(x:screenSize.width / 2.0, y:screenSize.height / 2.0)
+        
+        // Create squares at random positions
+        for i in 1..<13 {
+            let square = SKSpriteNode(imageNamed: "card\(i)")
+            square.setScale(0.25)
+            square.anchorPoint = CGPoint(x: 0.5,y: 0.5)
+            square.alpha = 0.7
+            
+            let x = CGFloat(arc4random_uniform(UInt32(screenSize.width*0.8))) - (screenSize.width*0.8) / 2.0
+            let y = CGFloat(arc4random_uniform(UInt32(screenSize.height*0.8))) - (screenSize.height*0.8) / 2.0
+            square.position = CGPoint(x:x, y:y)
+            node.addChild(square)
+        }
+        return node
+    }
 }
 
 //ACELEROMETER
